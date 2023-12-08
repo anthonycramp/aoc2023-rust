@@ -26,6 +26,13 @@ fn find_last_digit(input: &str) -> i32 {
     *get_digits(input).last().unwrap()
 }
 
+/// Compute the calibration value for the supplied text.
+/// Returns the two digit number combining the
+/// first and last digits found in the input.
+fn compute_calibration_value(input: &str) -> i32 {
+    0
+}
+
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
     0

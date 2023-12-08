@@ -35,7 +35,7 @@ fn compute_calibration_value(input: &str) -> i32 {
 
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
-    0
+    input.lines().map(|l| compute_calibration_value(l)).sum()
 }
 
 // replace return type as required by the problem

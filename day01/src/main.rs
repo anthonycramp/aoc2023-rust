@@ -2,8 +2,9 @@ const INPUT: &str = include_str!("../../inputs/day01.txt");
 // const INPUT: &str = "";
 
 fn main() {
-    println!("Day NN Part 1: {:?}", part1(INPUT));
-    println!("Day NN Part 2: {:?}", part2(INPUT));
+    const day_number: &str = "01";
+    println!("Day {} Part 1: {:?}", day_number, part1(INPUT));
+    println!("Day {} Part 2: {:?}", day_number, part2(INPUT));
 }
 
 // replace return type as required by the problem
@@ -18,22 +19,28 @@ fn part2(input: &str) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    // const TEST_INPUT: &str = include_str!("dayNN_test.txt");
+    const TEST_INPUT1: &str = r"1abc2
+    pqr3stu8vwx
+    a1b2c3d4e5f
+    treb7uchet";
+
+    const TEST_INPUT2: &str = r"two1nine
+    eightwothree
+    abcone2threexyz
+    xtwone3four
+    4nineeightseven2
+    zoneight234
+    7pqrstsixteen";
+
     use super::*;
     use test_support::test_support::TestCase;
 
     #[test]
     fn test_part1() {
-        let test_cases = [
-            TestCase {
-                input: TEST_INPUT,
-                expected: 123,
-            },
-            TestCase {
-                input: "abc",
-                expected: 345,
-            },
-        ];
+        let test_cases = [TestCase {
+            input: TEST_INPUT1,
+            expected: 142,
+        }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part1(*input), *expected);
         }
@@ -41,16 +48,10 @@ mod tests {
 
     #[test]
     fn test_part2() {
-        let test_cases = [
-            TestCase {
-                input: TEST_INPUT,
-                expected: 123,
-            },
-            TestCase {
-                input: "abc",
-                expected: 345,
-            },
-        ];
+        let test_cases = [TestCase {
+            input: TEST_INPUT2,
+            expected: 281,
+        }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part2(*input), *expected);
         }

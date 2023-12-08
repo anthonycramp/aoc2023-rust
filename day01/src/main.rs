@@ -30,7 +30,7 @@ fn find_last_digit(input: &str) -> i32 {
 /// Returns the two digit number combining the
 /// first and last digits found in the input.
 fn compute_calibration_value(input: &str) -> i32 {
-    12
+    find_first_digit(input) * 10 + find_last_digit(input)
 }
 
 // replace return type as required by the problem

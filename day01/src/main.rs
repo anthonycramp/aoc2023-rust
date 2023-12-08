@@ -164,18 +164,18 @@ mod tests {
                 input: "1abc2",
                 expected: 12,
             },
-            // TestCase {
-            //     input: "pqr3stu8vwx",
-            //     expected: 38,
-            // },
-            // TestCase {
-            //     input: "a1b2c3d4e5f",
-            //     expected: 15,
-            // },
-            // TestCase {
-            //     input: "treb7uchet",
-            //     expected: 77,
-            // },
+            TestCase {
+                input: "pqr3stu8vwx",
+                expected: 38,
+            },
+            TestCase {
+                input: "a1b2c3d4e5f",
+                expected: 15,
+            },
+            TestCase {
+                input: "treb7uchet",
+                expected: 77,
+            },
         ];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(compute_calibration_value(input), *expected);

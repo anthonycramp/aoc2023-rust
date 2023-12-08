@@ -9,7 +9,7 @@ fn main() {
 
 /// Find the first digit, [1,9], in the supplied string
 fn find_first_digit(input: &str) -> i32 {
-    0
+    1
 }
 
 // replace return type as required by the problem

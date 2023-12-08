@@ -7,15 +7,20 @@ fn main() {
     println!("Day {} Part 2: {:?}", day_number, part2(INPUT));
 }
 
+/// Find and return the digits that exist in the supplied string
+fn get_digits(input: &str) -> Vec<char> {
+    input.chars().filter(|c| c.is_ascii_digit()).collect()
+}
+
 /// Find the first digit, [1,9], in the supplied string
 fn find_first_digit(input: &str) -> i32 {
-    let digits: Vec<_> = input.chars().filter(|c| c.is_ascii_digit()).collect();
+    let digits: Vec<_> = get_digits(input);
     digits[0].to_digit(10).unwrap() as i32
 }
 
 /// Find the last digit, [1,9], in the supplied string
 fn find_last_digit(input: &str) -> i32 {
-    let digits: Vec<_> = input.chars().filter(|c| c.is_ascii_digit()).collect();
+    let digits: Vec<_> = get_digits(input);
     digits.last().unwrap().to_digit(10).unwrap() as i32
 }
 // replace return type as required by the problem

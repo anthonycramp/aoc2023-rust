@@ -8,21 +8,24 @@ fn main() {
 }
 
 /// Find and return the digits that exist in the supplied string
-fn get_digits(input: &str) -> Vec<char> {
-    input.chars().filter(|c| c.is_ascii_digit()).collect()
+fn get_digits(input: &str) -> Vec<i32> {
+    input
+        .chars()
+        .filter(|c| c.is_ascii_digit())
+        .map(|c| c.to_digit(10).unwrap() as i32)
+        .collect()
 }
 
 /// Find the first digit, [1,9], in the supplied string
 fn find_first_digit(input: &str) -> i32 {
-    let digits: Vec<_> = get_digits(input);
-    digits[0].to_digit(10).unwrap() as i32
+    get_digits(input)[0]
 }
 
 /// Find the last digit, [1,9], in the supplied string
 fn find_last_digit(input: &str) -> i32 {
-    let digits: Vec<_> = get_digits(input);
-    digits.last().unwrap().to_digit(10).unwrap() as i32
+    *get_digits(input).last().unwrap()
 }
+
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
     0
@@ -73,6 +76,30 @@ mod tests {
     //     }
     // }
 
+    #[test]
+    fn test_get_digits() {
+        let test_cases = [
+            TestCase {
+                input: "1abc2",
+                expected: vec![1, 2],
+            },
+            TestCase {
+                input: "pqr3stu8vwx",
+                expected: vec![3, 8],
+            },
+            TestCase {
+                input: "a1b2c3d4e5f",
+                expected: vec![1, 2, 3, 4, 5],
+            },
+            TestCase {
+                input: "treb7uchet",
+                expected: vec![7],
+            },
+        ];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(get_digits(input), *expected);
+        }
+    }
     #[test]
     fn test_find_first_digit() {
         let test_cases = [

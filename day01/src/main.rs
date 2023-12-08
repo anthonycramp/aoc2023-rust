@@ -64,10 +64,16 @@ mod tests {
 
     #[test]
     fn test_find_first_digit() {
-        let test_cases = [TestCase {
-            input: "1abc2",
-            expected: 1,
-        }];
+        let test_cases = [
+            TestCase {
+                input: "1abc2",
+                expected: 1,
+            },
+            TestCase {
+                input: "pqr3stu8vwx",
+                expected: 3,
+            },
+        ];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(find_first_digit(input), *expected);
         }

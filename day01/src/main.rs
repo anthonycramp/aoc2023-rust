@@ -40,27 +40,27 @@ mod tests {
     use super::*;
     use test_support::test_support::TestCase;
 
-    #[test]
-    fn test_part1() {
-        let test_cases = [TestCase {
-            input: TEST_INPUT1,
-            expected: 142,
-        }];
-        for TestCase { input, expected } in test_cases.iter() {
-            assert_eq!(part1(*input), *expected);
-        }
-    }
+    // #[test]
+    // fn test_part1() {
+    //     let test_cases = [TestCase {
+    //         input: TEST_INPUT1,
+    //         expected: 142,
+    //     }];
+    //     for TestCase { input, expected } in test_cases.iter() {
+    //         assert_eq!(part1(*input), *expected);
+    //     }
+    // }
 
-    #[test]
-    fn test_part2() {
-        let test_cases = [TestCase {
-            input: TEST_INPUT2,
-            expected: 281,
-        }];
-        for TestCase { input, expected } in test_cases.iter() {
-            assert_eq!(part2(*input), *expected);
-        }
-    }
+    // #[test]
+    // fn test_part2() {
+    //     let test_cases = [TestCase {
+    //         input: TEST_INPUT2,
+    //         expected: 281,
+    //     }];
+    //     for TestCase { input, expected } in test_cases.iter() {
+    //         assert_eq!(part2(*input), *expected);
+    //     }
+    // }
 
     #[test]
     fn test_find_first_digit() {

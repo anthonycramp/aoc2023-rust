@@ -74,6 +74,14 @@ mod tests {
                 input: "pqr3stu8vwx",
                 expected: 3,
             },
+            TestCase {
+                input: "a1b2c3d4e5f",
+                expected: 1,
+            },
+            TestCase {
+                input: "treb7uchet",
+                expected: 7,
+            },
         ];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(find_first_digit(input), *expected);

@@ -7,6 +7,11 @@ fn main() {
     println!("Day {} Part 2: {:?}", day_number, part2(INPUT));
 }
 
+/// Find the first digit, [1,9], in the supplied string
+fn find_first_digit(input: &str) -> i32 {
+    0
+}
+
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
     0
@@ -54,6 +59,17 @@ mod tests {
         }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part2(*input), *expected);
+        }
+    }
+
+    #[test]
+    fn test_find_first_digit() {
+        let test_cases = [TestCase {
+            input: "1abc2",
+            expected: 1,
+        }];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(find_first_digit(input), *expected);
         }
     }
 }

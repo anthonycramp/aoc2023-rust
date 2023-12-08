@@ -9,7 +9,8 @@ fn main() {
 
 /// Find the first digit, [1,9], in the supplied string
 fn find_first_digit(input: &str) -> i32 {
-    1
+    let digits: Vec<_> = input.chars().filter(|c| c.is_ascii_digit()).collect();
+    digits[0].to_digit(10).unwrap() as i32
 }
 
 // replace return type as required by the problem

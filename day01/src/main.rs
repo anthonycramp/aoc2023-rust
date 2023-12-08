@@ -13,6 +13,11 @@ fn find_first_digit(input: &str) -> i32 {
     digits[0].to_digit(10).unwrap() as i32
 }
 
+/// Find the last digit, [1,9], in the supplied string
+fn find_last_digit(input: &str) -> i32 {
+    let digits: Vec<_> = input.chars().filter(|c| c.is_ascii_digit()).collect();
+    digits.last().unwrap().to_digit(10).unwrap() as i32
+}
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
     0
@@ -93,7 +98,7 @@ mod tests {
         let test_cases = [
             TestCase {
                 input: "1abc2",
-                expected: 1,
+                expected: 2,
             },
             // TestCase {
             //     input: "pqr3stu8vwx",

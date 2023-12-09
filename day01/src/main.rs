@@ -198,6 +198,26 @@ mod tests {
                 input: "eightwothree",
                 expected: vec![8, 2, 3],
             },
+            TestCase {
+                input: "abcone2threexyz",
+                expected: vec![1, 2, 3],
+            },
+            TestCase {
+                input: "xtwone3four",
+                expected: vec![2, 1, 3, 4],
+            },
+            TestCase {
+                input: "4nineeightseven2",
+                expected: vec![4, 9, 8, 7, 2],
+            },
+            TestCase {
+                input: "zoneight234",
+                expected: vec![1, 8, 2, 3, 4],
+            },
+            TestCase {
+                input: "7pqrstsixteen",
+                expected: vec![7, 6],
+            },
         ];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(get_digits_part2(input), *expected);

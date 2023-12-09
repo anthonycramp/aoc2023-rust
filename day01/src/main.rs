@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 
 const DAY_NUMBER: &str = "01";
 const INPUT: &str = include_str!("../../inputs/day01.txt");

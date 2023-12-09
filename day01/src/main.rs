@@ -17,25 +17,30 @@ fn get_digits(input: &str) -> Vec<i32> {
 }
 
 /// Find the first digit, [1,9], in the supplied string
-fn find_first_digit(input: &str) -> i32 {
-    get_digits(input)[0]
+fn find_first_digit(input: &[i32]) -> i32 {
+    *input.first().unwrap()
 }
 
 /// Find the last digit, [1,9], in the supplied string
-fn find_last_digit(input: &str) -> i32 {
-    *get_digits(input).last().unwrap()
+fn find_last_digit(input: &[i32]) -> i32 {
+    *input.last().unwrap()
 }
 
 /// Compute the calibration value for the supplied text.
 /// Returns the two digit number combining the
-/// first and last digits found in the input.
-fn compute_calibration_value(input: &str) -> i32 {
-    find_first_digit(input) * 10 + find_last_digit(input)
+/// first and last digits found in the input per the
+/// get_digits function provided.
+fn compute_calibration_value(input: &str, get_digits_fn: fn(&str) -> Vec<i32>) -> i32 {
+    let digits = get_digits_fn(input);
+    find_first_digit(&digits) * 10 + find_last_digit(&digits)
 }
 
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
-    input.lines().map(|l| compute_calibration_value(l)).sum()
+    input
+        .lines()
+        .map(|l| compute_calibration_value(l, get_digits))
+        .sum()
 }
 
 // replace return type as required by the problem
@@ -107,55 +112,6 @@ mod tests {
             assert_eq!(get_digits(input), *expected);
         }
     }
-    #[test]
-    fn test_find_first_digit() {
-        let test_cases = [
-            TestCase {
-                input: "1abc2",
-                expected: 1,
-            },
-            TestCase {
-                input: "pqr3stu8vwx",
-                expected: 3,
-            },
-            TestCase {
-                input: "a1b2c3d4e5f",
-                expected: 1,
-            },
-            TestCase {
-                input: "treb7uchet",
-                expected: 7,
-            },
-        ];
-        for TestCase { input, expected } in test_cases.iter() {
-            assert_eq!(find_first_digit(input), *expected);
-        }
-    }
-
-    #[test]
-    fn test_find_last_digit() {
-        let test_cases = [
-            TestCase {
-                input: "1abc2",
-                expected: 2,
-            },
-            TestCase {
-                input: "pqr3stu8vwx",
-                expected: 8,
-            },
-            TestCase {
-                input: "a1b2c3d4e5f",
-                expected: 5,
-            },
-            TestCase {
-                input: "treb7uchet",
-                expected: 7,
-            },
-        ];
-        for TestCase { input, expected } in test_cases.iter() {
-            assert_eq!(find_last_digit(input), *expected);
-        }
-    }
 
     #[test]
     fn test_compute_calibration_value() {
@@ -178,7 +134,7 @@ mod tests {
             },
         ];
         for TestCase { input, expected } in test_cases.iter() {
-            assert_eq!(compute_calibration_value(input), *expected);
+            assert_eq!(compute_calibration_value(input, get_digits), *expected);
         }
     }
 }

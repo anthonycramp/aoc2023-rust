@@ -20,54 +20,44 @@ fn get_digits(input: &str) -> Vec<i32> {
 
 struct Digit {
     word: &'static str,
-    number: &'static str,
     value: i32,
 }
 
 const DIGITS: [Digit; 9] = [
     Digit {
         word: "one",
-        number: "1",
         value: 1,
     },
     Digit {
         word: "two",
-        number: "2",
         value: 2,
     },
     Digit {
         word: "three",
-        number: "3",
         value: 3,
     },
     Digit {
         word: "four",
-        number: "4",
         value: 4,
     },
     Digit {
         word: "five",
-        number: "5",
         value: 5,
     },
     Digit {
         word: "six",
-        number: "6",
         value: 6,
     },
     Digit {
         word: "seven",
-        number: "7",
         value: 7,
     },
     Digit {
         word: "eight",
-        number: "8",
         value: 8,
     },
     Digit {
         word: "nine",
-        number: "9",
         value: 9,
     },
 ];
@@ -79,17 +69,12 @@ fn get_digits_part2(input: &str) -> Vec<i32> {
     // create a map from indices to the digit at that index
     let mut digits_by_index: BTreeMap<usize, i32> = BTreeMap::new();
 
-    for Digit {
-        word,
-        number,
-        value,
-    } in DIGITS
-    {
+    for Digit { word, value } in DIGITS {
         let word_indices = input.match_indices(word);
         for (index, _) in word_indices {
             digits_by_index.insert(index, value);
         }
-        let number_indices = input.match_indices(number);
+        let number_indices = input.match_indices(std::char::from_digit(value as u32, 10).unwrap());
         for (index, _) in number_indices {
             digits_by_index.insert(index, value);
         }

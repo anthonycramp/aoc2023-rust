@@ -106,6 +106,17 @@ mod tests {
     }
 
     #[test]
+    fn test_get_digits_part2() {
+        let test_cases = [TestCase {
+            input: "two1nine",
+            expected: vec![2, 1, 9],
+        }];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(get_digits_part2(input), *expected);
+        }
+    }
+
+    #[test]
     fn test_compute_calibration_value() {
         let test_cases = [
             TestCase {

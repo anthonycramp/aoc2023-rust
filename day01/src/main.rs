@@ -32,7 +32,9 @@ fn find_last_digit(input: &[i32]) -> i32 {
 /// get_digits function provided.
 fn compute_calibration_value(input: &str, get_digits_fn: fn(&str) -> Vec<i32>) -> i32 {
     let digits = get_digits_fn(input);
-    find_first_digit(&digits) * 10 + find_last_digit(&digits)
+    let first_digit = *digits.first().unwrap();
+    let last_digit = *digits.last().unwrap();
+    first_digit * 10 + last_digit
 }
 
 // replace return type as required by the problem

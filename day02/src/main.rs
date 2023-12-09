@@ -91,7 +91,7 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
-    fn test_is_game_valid() {
+    fn test_is_game_possible() {
         let game_bag = GameBag::new(12, 13, 14);
         assert!(game_bag.is_game_possible(&Game::default().set_blue(3).set_red(4)));
         assert!(!game_bag.is_game_possible(&Game::default().set_green(8).set_blue(6).set_red(20)));

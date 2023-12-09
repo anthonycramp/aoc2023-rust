@@ -1,10 +1,10 @@
+const DAY_NUMBER: &str = "01";
 const INPUT: &str = include_str!("../../inputs/day01.txt");
 // const INPUT: &str = "";
 
 fn main() {
-    const day_number: &str = "01";
-    println!("Day {} Part 1: {:?}", day_number, part1(INPUT));
-    println!("Day {} Part 2: {:?}", day_number, part2(INPUT));
+    println!("Day {} Part 1: {:?}", DAY_NUMBER, part1(INPUT));
+    println!("Day {} Part 2: {:?}", DAY_NUMBER, part2(INPUT));
 }
 
 /// Find and return the digits that exist in the supplied string

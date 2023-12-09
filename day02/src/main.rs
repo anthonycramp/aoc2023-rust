@@ -17,6 +17,54 @@ fn part2(input: &str) -> i32 {
     0
 }
 
+struct GameBag {
+    red: u32,
+    green: u32,
+    blue: u32,
+}
+
+impl GameBag {
+    fn new(red: u32, green: u32, blue: u32) -> Self {
+        Self { red, green, blue }
+    }
+
+    fn is_game_possible(&self, game: &Game) -> bool {
+        false
+    }
+}
+
+struct Game {
+    red: Option<u32>,
+    green: Option<u32>,
+    blue: Option<u32>,
+}
+
+impl Default for Game {
+    fn default() -> Self {
+        Self {
+            red: None,
+            green: None,
+            blue: None,
+        }
+    }
+}
+
+impl Game {
+    fn set_red(mut self, red: u32) -> Self {
+        self.red = Some(red);
+        self
+    }
+
+    fn set_green(mut self, green: u32) -> Self {
+        self.green = Some(green);
+        self
+    }
+
+    fn set_blue(mut self, blue: u32) -> Self {
+        self.blue = Some(blue);
+        self
+    }
+}
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -31,7 +79,7 @@ mod tests {
     #[test]
     fn test_is_game_valid() {
         let game_bag = GameBag::new(12, 13, 14);
-        let game = Game::default().set_blue(3).set_red(4);
+        let mut game = Game::default().set_blue(3).set_red(4);
         assert!(game_bag.is_game_possible(&game));
     }
 

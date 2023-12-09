@@ -80,6 +80,7 @@ mod tests {
     fn test_is_game_valid() {
         let game_bag = GameBag::new(12, 13, 14);
         assert!(game_bag.is_game_possible(&Game::default().set_blue(3).set_red(4)));
+        assert!(!game_bag.is_game_possible(&Game::default().set_green(8).set_blue(6).set_red(20)));
     }
 
     #[test]

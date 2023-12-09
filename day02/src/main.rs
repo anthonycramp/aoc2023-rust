@@ -95,6 +95,16 @@ mod tests {
         let game_bag = GameBag::new(12, 13, 14);
         assert!(game_bag.is_game_possible(&Game::default().set_blue(3).set_red(4)));
         assert!(!game_bag.is_game_possible(&Game::default().set_green(8).set_blue(6).set_red(20)));
+        assert!(game_bag.is_game_possible(&Game::default().set_green(2)));
+        assert!(game_bag.is_game_possible(&Game::default().set_blue(5).set_red(4).set_green(13)));
+        assert!(!game_bag.is_game_possible(&Game::default().set_green(3).set_blue(15).set_red(14)));
+        assert!(game_bag.is_game_possible(&Game::default()));
+        assert!(game_bag.is_game_possible(
+            &Game::default()
+                .set_red(game_bag.red)
+                .set_green(game_bag.green)
+                .set_blue(game_bag.blue)
+        ));
     }
 
     #[test]

@@ -29,6 +29,13 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
+    fn test_is_game_valid() {
+        let game_bag = GameBag::new(12, 13, 14);
+        let game = Game::default().set_blue(3).set_red(4);
+        assert!(game_bag.is_game_possible(&game));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

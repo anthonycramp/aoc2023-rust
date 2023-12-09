@@ -49,6 +49,7 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
+    #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [
             TestCase { input: TEST_INPUT, expected: 123 },
@@ -60,6 +61,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "not yet implemented"]
     fn test_part2() {
         let test_cases = [
             TestCase { input: TEST_INPUT, expected: 123 },

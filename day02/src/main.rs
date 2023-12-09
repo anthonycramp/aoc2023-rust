@@ -29,7 +29,21 @@ impl GameBag {
     }
 
     fn is_game_possible(&self, game: &Game) -> bool {
-        true
+        let mut is_game_possible = true;
+
+        if let Some(red) = game.red {
+            is_game_possible = is_game_possible && (red <= self.red);
+        }
+
+        if let Some(green) = game.green {
+            is_game_possible = is_game_possible && (green <= self.green);
+        }
+
+        if let Some(blue) = game.blue {
+            is_game_possible = is_game_possible && (blue <= self.blue);
+        }
+
+        is_game_possible
     }
 }
 

@@ -16,16 +16,6 @@ fn get_digits(input: &str) -> Vec<i32> {
         .collect()
 }
 
-/// Find the first digit, [1,9], in the supplied string
-fn find_first_digit(input: &[i32]) -> i32 {
-    *input.first().unwrap()
-}
-
-/// Find the last digit, [1,9], in the supplied string
-fn find_last_digit(input: &[i32]) -> i32 {
-    *input.last().unwrap()
-}
-
 /// Compute the calibration value for the supplied text.
 /// Returns the two digit number combining the
 /// first and last digits found in the input per the

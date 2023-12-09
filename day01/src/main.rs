@@ -114,10 +114,16 @@ mod tests {
 
     #[test]
     fn test_get_digits_part2() {
-        let test_cases = [TestCase {
-            input: "two1nine",
-            expected: vec![2, 1, 9],
-        }];
+        let test_cases = [
+            TestCase {
+                input: "two1nine",
+                expected: vec![2, 1, 9],
+            },
+            TestCase {
+                input: "eightwothree",
+                expected: vec![8, 2, 3],
+            },
+        ];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(get_digits_part2(input), *expected);
         }

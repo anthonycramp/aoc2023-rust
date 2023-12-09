@@ -1,3 +1,5 @@
+use std::collections::{BTreeMap, HashMap};
+
 const DAY_NUMBER: &str = "01";
 const INPUT: &str = include_str!("../../inputs/day01.txt");
 // const INPUT: &str = "";
@@ -16,11 +18,84 @@ fn get_digits(input: &str) -> Vec<i32> {
         .collect()
 }
 
+struct Digit {
+    word: &'static str,
+    number: &'static str,
+    value: i32,
+}
+
+const DIGITS: [Digit; 9] = [
+    Digit {
+        word: "one",
+        number: "1",
+        value: 1,
+    },
+    Digit {
+        word: "two",
+        number: "2",
+        value: 2,
+    },
+    Digit {
+        word: "three",
+        number: "3",
+        value: 3,
+    },
+    Digit {
+        word: "four",
+        number: "4",
+        value: 4,
+    },
+    Digit {
+        word: "five",
+        number: "5",
+        value: 5,
+    },
+    Digit {
+        word: "six",
+        number: "6",
+        value: 6,
+    },
+    Digit {
+        word: "seven",
+        number: "7",
+        value: 7,
+    },
+    Digit {
+        word: "eight",
+        number: "8",
+        value: 8,
+    },
+    Digit {
+        word: "nine",
+        number: "9",
+        value: 9,
+    },
+];
+
 /// Find and return the digits that exist in the supplied string.
 /// Digits can be the numbers 1..=9 or their equivalent as
 /// English words.
 fn get_digits_part2(input: &str) -> Vec<i32> {
-    vec![2, 1, 9]
+    // create a map from indices to the digit at that index
+    let mut digits_by_index: BTreeMap<usize, i32> = BTreeMap::new();
+
+    for Digit {
+        word,
+        number,
+        value,
+    } in DIGITS
+    {
+        let word_indices = input.match_indices(word);
+        for (index, _) in word_indices {
+            digits_by_index.insert(index, value);
+        }
+        let number_indices = input.match_indices(number);
+        for (index, _) in number_indices {
+            digits_by_index.insert(index, value);
+        }
+    }
+
+    digits_by_index.values().copied().collect()
 }
 
 /// Compute the calibration value for the supplied text.

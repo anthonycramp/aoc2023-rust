@@ -248,4 +248,43 @@ mod tests {
             assert_eq!(compute_calibration_value(input, get_digits), *expected);
         }
     }
+    #[test]
+    fn test_compute_calibration_value_part2() {
+        let test_cases = [
+            TestCase {
+                input: "two1nine",
+                expected: 29,
+            },
+            TestCase {
+                input: "eightwothree",
+                expected: 83,
+            },
+            TestCase {
+                input: "abcone2threexyz",
+                expected: 13,
+            },
+            TestCase {
+                input: "xtwone3four",
+                expected: 24,
+            },
+            TestCase {
+                input: "4nineeightseven2",
+                expected: 42,
+            },
+            TestCase {
+                input: "zoneight234",
+                expected: 14,
+            },
+            TestCase {
+                input: "7pqrstsixteen",
+                expected: 76,
+            },
+        ];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(
+                compute_calibration_value(input, get_digits_part2),
+                *expected
+            );
+        }
+    }
 }

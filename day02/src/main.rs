@@ -29,7 +29,7 @@ impl GameBag {
     }
 
     fn is_game_possible(&self, game: &Game) -> bool {
-        false
+        true
     }
 }
 

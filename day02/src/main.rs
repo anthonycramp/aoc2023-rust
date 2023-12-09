@@ -28,32 +28,32 @@ impl GameBag {
         Self { red, green, blue }
     }
 
-    fn is_game_possible(&self, game: &Game) -> bool {
-        let mut is_game_possible = true;
+    fn is_hand_possible(&self, game: &Hand) -> bool {
+        let mut is_hand_possible = true;
 
         if let Some(red) = game.red {
-            is_game_possible = is_game_possible && (red <= self.red);
+            is_hand_possible = is_hand_possible && (red <= self.red);
         }
 
         if let Some(green) = game.green {
-            is_game_possible = is_game_possible && (green <= self.green);
+            is_hand_possible = is_hand_possible && (green <= self.green);
         }
 
         if let Some(blue) = game.blue {
-            is_game_possible = is_game_possible && (blue <= self.blue);
+            is_hand_possible = is_hand_possible && (blue <= self.blue);
         }
 
-        is_game_possible
+        is_hand_possible
     }
 }
 
-struct Game {
+struct Hand {
     red: Option<u32>,
     green: Option<u32>,
     blue: Option<u32>,
 }
 
-impl Default for Game {
+impl Default for Hand {
     fn default() -> Self {
         Self {
             red: None,
@@ -63,7 +63,7 @@ impl Default for Game {
     }
 }
 
-impl Game {
+impl Hand {
     fn set_red(mut self, red: u32) -> Self {
         self.red = Some(red);
         self
@@ -91,16 +91,16 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
-    fn test_is_game_possible() {
+    fn test_is_hand_possible() {
         let game_bag = GameBag::new(12, 13, 14);
-        assert!(game_bag.is_game_possible(&Game::default().set_blue(3).set_red(4)));
-        assert!(!game_bag.is_game_possible(&Game::default().set_green(8).set_blue(6).set_red(20)));
-        assert!(game_bag.is_game_possible(&Game::default().set_green(2)));
-        assert!(game_bag.is_game_possible(&Game::default().set_blue(5).set_red(4).set_green(13)));
-        assert!(!game_bag.is_game_possible(&Game::default().set_green(3).set_blue(15).set_red(14)));
-        assert!(game_bag.is_game_possible(&Game::default()));
-        assert!(game_bag.is_game_possible(
-            &Game::default()
+        assert!(game_bag.is_hand_possible(&Hand::default().set_blue(3).set_red(4)));
+        assert!(!game_bag.is_hand_possible(&Hand::default().set_green(8).set_blue(6).set_red(20)));
+        assert!(game_bag.is_hand_possible(&Hand::default().set_green(2)));
+        assert!(game_bag.is_hand_possible(&Hand::default().set_blue(5).set_red(4).set_green(13)));
+        assert!(!game_bag.is_hand_possible(&Hand::default().set_green(3).set_blue(15).set_red(14)));
+        assert!(game_bag.is_hand_possible(&Hand::default()));
+        assert!(game_bag.is_hand_possible(
+            &Hand::default()
                 .set_red(game_bag.red)
                 .set_green(game_bag.green)
                 .set_blue(game_bag.blue)

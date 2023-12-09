@@ -151,16 +151,16 @@ mod tests {
         }
     }
 
-    // #[test]
-    // fn test_part2() {
-    //     let test_cases = [TestCase {
-    //         input: TEST_INPUT2,
-    //         expected: 281,
-    //     }];
-    //     for TestCase { input, expected } in test_cases.iter() {
-    //         assert_eq!(part2(*input), *expected);
-    //     }
-    // }
+    #[test]
+    fn test_part2() {
+        let test_cases = [TestCase {
+            input: TEST_INPUT2,
+            expected: 281,
+        }];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(part2(*input), *expected);
+        }
+    }
 
     #[test]
     fn test_get_digits() {

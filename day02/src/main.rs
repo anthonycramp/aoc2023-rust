@@ -108,6 +108,17 @@ mod tests {
     }
 
     #[test]
+    fn test_is_game_possible() {
+        let game_bag = GameBag::new(12, 13, 14);
+        assert!(game_bag.is_game_possible(
+            &Game::default()
+                .add_hand(Hand::default().set_blue(3).set_red(4))
+                .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
+                .add_hand(Hand::default().set_green(2))
+        ));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

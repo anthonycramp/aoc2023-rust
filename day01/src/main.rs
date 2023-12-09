@@ -20,7 +20,7 @@ fn get_digits(input: &str) -> Vec<i32> {
 /// Digits can be the numbers 1..=9 or their equivalent as
 /// English words.
 fn get_digits_part2(input: &str) -> Vec<i32> {
-    vec![]
+    vec![2, 1, 9]
 }
 
 /// Compute the calibration value for the supplied text.

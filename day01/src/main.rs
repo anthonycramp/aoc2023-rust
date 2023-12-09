@@ -16,6 +16,13 @@ fn get_digits(input: &str) -> Vec<i32> {
         .collect()
 }
 
+/// Find and return the digits that exist in the supplied string.
+/// Digits can be the numbers 1..=9 or their equivalent as
+/// English words.
+fn get_digits_part2(input: &str) -> Vec<i32> {
+    vec![]
+}
+
 /// Compute the calibration value for the supplied text.
 /// Returns the two digit number combining the
 /// first and last digits found in the input per the

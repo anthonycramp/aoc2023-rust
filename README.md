@@ -23,12 +23,13 @@ how, I'll write an app that plugs in to cargo so I can just say something like
 - Replace the rest of `main.rs` with:
 
 ```rust
+const DAY_NUMBER: &str = "NN";
 // const INPUT: &str = include_str!("../../inputs/dayNN.txt");
 // const INPUT: &str = "";
 
 fn main() {
-    println!("Day NN Part 1: {:?}", part1(INPUT));
-    println!("Day NN Part 2: {:?}", part2(INPUT));
+    println!("Day {} Part 1: {:?}", DAY_NUMBER, part1(INPUT));
+    println!("Day {} Part 2: {:?}", DAY_NUMBER, part2(INPUT));
 }
 
 // replace return type as required by the problem

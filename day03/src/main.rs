@@ -17,6 +17,9 @@ fn part2(input: &str) -> i32 {
     0
 }
 
+fn get_integer_at_location(row: &str, location: usize) -> u32 {
+    0
+}
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"467..114..

@@ -67,21 +67,11 @@ impl GameBag {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Default, Debug, PartialEq)]
 struct Hand {
     red: Option<u32>,
     green: Option<u32>,
     blue: Option<u32>,
-}
-
-impl Default for Hand {
-    fn default() -> Self {
-        Self {
-            red: None,
-            green: None,
-            blue: None,
-        }
-    }
 }
 
 impl Hand {

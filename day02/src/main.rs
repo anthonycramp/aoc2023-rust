@@ -186,10 +186,16 @@ mod tests {
 
     #[test]
     fn test_parse_hand() {
-        let test_cases = [TestCase {
-            input: "3 blue, 4 red",
-            expected: Hand::default().set_blue(3).set_red(4),
-        }];
+        let test_cases = [
+            TestCase {
+                input: "3 blue, 4 red",
+                expected: Hand::default().set_blue(3).set_red(4),
+            },
+            TestCase {
+                input: "8 green, 6 blue, 20 red",
+                expected: Hand::default().set_green(8).set_blue(6).set_red(20),
+            },
+        ];
         for TestCase { input, expected } in test_cases {
             assert_eq!(expected, Hand::from(input));
         }

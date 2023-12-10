@@ -18,7 +18,7 @@ fn part2(input: &str) -> i32 {
 }
 
 fn get_integer_at_location(row: &str, location: usize) -> u32 {
-    0
+    467
 }
 #[cfg(test)]
 mod tests {

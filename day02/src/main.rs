@@ -306,10 +306,16 @@ mod tests {
 
     #[test]
     fn test_game_bag_power() {
-        let test_cases = [TestCase {
-            input: GameBag::new(4, 2, 6),
-            expected: 48,
-        }];
+        let test_cases = [
+            TestCase {
+                input: GameBag::new(4, 2, 6),
+                expected: 48,
+            },
+            TestCase {
+                input: GameBag::new(20, 13, 6),
+                expected: 1560,
+            },
+        ];
         for TestCase { input, expected } in test_cases {
             assert_eq!(expected, input.power());
         }

@@ -125,7 +125,18 @@ impl Game {
 
 impl From<&str> for Game {
     fn from(value: &str) -> Self {
-        Game::new(0)
+        let game_parts: Vec<_> = value.split(": ").collect();
+
+        let game_header: Vec<_> = game_parts[0].split_ascii_whitespace().collect();
+        let game_id: u32 = game_header[1].parse().unwrap();
+        let mut game = Game::new(game_id);
+
+        let hands: Vec<_> = game_parts[1].split("; ").collect();
+        for hand in hands {
+            game = game.add_hand(Hand::from(hand));
+        }
+
+        game
     }
 }
 

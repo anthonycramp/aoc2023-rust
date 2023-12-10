@@ -17,8 +17,43 @@ fn part2(input: &str) -> i32 {
     0
 }
 
+/// row[location] should contain an ASCII digit which may be part
+/// of a larger sequence of ASCII digits making up an integer number.
+/// This function finds and returns the integer containing the digit
+/// at row[location].
 fn get_integer_at_location(row: &str, location: usize) -> u32 {
-    row[location..location + 3].parse::<u32>().unwrap() as u32
+    assert!(row.chars().nth(location).unwrap().is_ascii_digit());
+    let row_bytes = row.as_bytes();
+
+    // need to walk backward from location until we hit start of row
+    // or we find a non-digit location
+    let mut number_start_index = location;
+    while number_start_index > 0 {
+        if !row_bytes[number_start_index].is_ascii_digit() {
+            // we've gone one step before the integer, step forward once
+            number_start_index += 1;
+            break;
+        }
+
+        number_start_index -= 1;
+    }
+
+    // then walk forward from location until we hit end of row or
+    // we find a non-digit location
+    let mut number_end_index = location;
+    while number_end_index < row_bytes.len() {
+        if !row_bytes[number_end_index].is_ascii_digit() {
+            // we're passed the end of the integer, no need to
+            // step back because ranges are non-inclusive of their
+            // upper bound.
+            break;
+        }
+        number_end_index += 1;
+    }
+
+    row[number_start_index..number_end_index]
+        .parse::<u32>()
+        .unwrap()
 }
 
 #[cfg(test)]

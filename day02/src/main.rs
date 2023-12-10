@@ -126,6 +126,10 @@ impl Game {
         self.hands.push(hand);
         self
     }
+
+    fn get_minimum_game_bag(&self) -> GameBag {
+        GameBag::new(0, 0, 0)
+    }
 }
 
 impl From<&str> for Game {

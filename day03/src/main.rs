@@ -18,8 +18,9 @@ fn part2(input: &str) -> i32 {
 }
 
 fn get_integer_at_location(row: &str, location: usize) -> u32 {
-    467
+    row[location..location + 3].parse::<u32>().unwrap() as u32
 }
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"467..114..

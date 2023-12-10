@@ -226,7 +226,7 @@ mod tests {
             expected: Game::new(1)
                 .add_hand(Hand::default().set_blue(3).set_red(4))
                 .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
-                .add_hand(Hand::default().set_green(6)),
+                .add_hand(Hand::default().set_green(2)),
         }];
         for TestCase { input, expected } in test_cases {
             assert_eq!(expected, Game::from(input));

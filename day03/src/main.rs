@@ -61,6 +61,46 @@ fn get_integer_at_location(row: &str, location: usize) -> u32 {
         .unwrap()
 }
 
+/// Represent a row and column in the engine schematic
+#[derive(Debug, PartialEq)]
+struct Location(usize, usize);
+
+fn get_neighbours_of_location(location: Location, rows: usize, columns: usize) -> Vec<Location> {
+    let row_lower_bound = if location.0 == 0 {
+        location.0
+    } else {
+        location.0 - 1
+    };
+    let row_upper_bound = if location.0 == rows - 1 {
+        location.0
+    } else {
+        location.0 + 1
+    };
+    let column_lower_bound = if location.1 == 0 {
+        location.1
+    } else {
+        location.1 - 1
+    };
+    let column_upper_bound = if location.1 == columns - 1 {
+        location.1
+    } else {
+        location.1 + 1
+    };
+
+    let mut neighbours: Vec<Location> = vec![];
+    for row in row_lower_bound..=row_upper_bound {
+        for column in column_lower_bound..=column_upper_bound {
+            if row == location.0 && column == location.1 {
+                // source location is not a neighbour
+                continue;
+            }
+            neighbours.push(Location(row, column));
+        }
+    }
+
+    neighbours
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"467..114..
@@ -100,7 +140,9 @@ mod tests {
     fn test_get_neighbours_of_location() {
         let neighbours = get_neighbours_of_location(Location(0, 0), 10, 10);
         assert_eq!(3, neighbours.len());
-        assert!(neighbours.contains(Location(0, 1)));
+        assert!(neighbours.contains(&Location(0, 1)));
+        assert!(neighbours.contains(&Location(1, 0)));
+        assert!(neighbours.contains(&Location(1, 1)));
     }
 
     #[test]

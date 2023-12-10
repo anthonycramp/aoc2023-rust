@@ -22,7 +22,7 @@ fn part2(input: &str) -> i32 {
     0
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct GameBag {
     red: u32,
     green: u32,

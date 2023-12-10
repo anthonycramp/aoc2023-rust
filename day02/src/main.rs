@@ -51,7 +51,7 @@ impl GameBag {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct Hand {
     red: Option<u32>,
     green: Option<u32>,

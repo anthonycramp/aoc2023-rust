@@ -123,6 +123,12 @@ impl Game {
     }
 }
 
+impl From<&str> for Game {
+    fn from(value: &str) -> Self {
+        Game::new(0)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green

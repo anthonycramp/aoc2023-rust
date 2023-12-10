@@ -34,6 +34,11 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
+    fn test_get_integer_at_location() {
+        assert_eq!(467, get_integer_at_location("467..114..", 0));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [

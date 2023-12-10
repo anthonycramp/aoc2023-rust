@@ -1,3 +1,5 @@
+use std::cmp::max;
+
 const DAY_NUMBER: &str = "02";
 const INPUT: &str = include_str!("../../inputs/day02.txt");
 // const INPUT: &str = "";
@@ -129,7 +131,25 @@ impl Game {
     }
 
     fn get_minimum_game_bag(&self) -> GameBag {
-        GameBag::new(0, 0, 0)
+        let mut minimum_red = 0;
+        let mut minimum_green = 0;
+        let mut minimum_blue = 0;
+
+        for hand in self.hands.iter() {
+            if let Some(red) = hand.red {
+                minimum_red = max(minimum_red, red);
+            }
+
+            if let Some(green) = hand.green {
+                minimum_green = max(minimum_green, green);
+            }
+
+            if let Some(blue) = hand.blue {
+                minimum_blue = max(minimum_blue, blue)
+            }
+        }
+
+        GameBag::new(minimum_red, minimum_green, minimum_blue)
     }
 }
 

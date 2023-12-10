@@ -106,6 +106,7 @@ impl From<&str> for Hand {
     }
 }
 
+#[derive(Debug)]
 struct Game {
     id: u32,
     hands: Vec<Hand>,

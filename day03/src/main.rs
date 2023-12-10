@@ -138,11 +138,81 @@ mod tests {
 
     #[test]
     fn test_get_neighbours_of_location() {
+        // test upper left corner
         let neighbours = get_neighbours_of_location(Location(0, 0), 10, 10);
         assert_eq!(3, neighbours.len());
         assert!(neighbours.contains(&Location(0, 1)));
         assert!(neighbours.contains(&Location(1, 0)));
         assert!(neighbours.contains(&Location(1, 1)));
+
+        // test lower right corner
+        let neighbours = get_neighbours_of_location(Location(9, 9), 10, 10);
+        assert_eq!(3, neighbours.len());
+        assert!(neighbours.contains(&Location(8, 9)));
+        assert!(neighbours.contains(&Location(9, 8)));
+        assert!(neighbours.contains(&Location(8, 8)));
+
+        // test upper right corner
+        let neighbours = get_neighbours_of_location(Location(0, 9), 10, 10);
+        assert_eq!(3, neighbours.len());
+        assert!(neighbours.contains(&Location(0, 8)));
+        assert!(neighbours.contains(&Location(1, 9)));
+        assert!(neighbours.contains(&Location(1, 8)));
+
+        // test lower left corner
+        let neighbours = get_neighbours_of_location(Location(9, 0), 10, 10);
+        assert_eq!(3, neighbours.len());
+        assert!(neighbours.contains(&Location(8, 0)));
+        assert!(neighbours.contains(&Location(9, 1)));
+        assert!(neighbours.contains(&Location(8, 1)));
+
+        // test left edge
+        let neighbours = get_neighbours_of_location(Location(5, 0), 10, 10);
+        assert_eq!(5, neighbours.len());
+        assert!(neighbours.contains(&Location(4, 0)));
+        assert!(neighbours.contains(&Location(6, 0)));
+        assert!(neighbours.contains(&Location(4, 1)));
+        assert!(neighbours.contains(&Location(5, 1)));
+        assert!(neighbours.contains(&Location(6, 1)));
+
+        // test right edge
+        let neighbours = get_neighbours_of_location(Location(5, 9), 10, 10);
+        assert_eq!(5, neighbours.len());
+        assert!(neighbours.contains(&Location(4, 9)));
+        assert!(neighbours.contains(&Location(6, 9)));
+        assert!(neighbours.contains(&Location(4, 8)));
+        assert!(neighbours.contains(&Location(5, 8)));
+        assert!(neighbours.contains(&Location(6, 8)));
+
+        // test top edge
+        let neighbours = get_neighbours_of_location(Location(0, 5), 10, 10);
+        assert_eq!(5, neighbours.len());
+        assert!(neighbours.contains(&Location(0, 4)));
+        assert!(neighbours.contains(&Location(0, 6)));
+        assert!(neighbours.contains(&Location(1, 4)));
+        assert!(neighbours.contains(&Location(1, 5)));
+        assert!(neighbours.contains(&Location(1, 6)));
+
+        // test bottom edge
+        let neighbours = get_neighbours_of_location(Location(9, 5), 10, 10);
+        assert_eq!(5, neighbours.len());
+        assert!(neighbours.contains(&Location(9, 4)));
+        assert!(neighbours.contains(&Location(9, 6)));
+        assert!(neighbours.contains(&Location(8, 4)));
+        assert!(neighbours.contains(&Location(8, 5)));
+        assert!(neighbours.contains(&Location(8, 6)));
+
+        // test a centre location
+        let neighbours = get_neighbours_of_location(Location(5, 5), 10, 10);
+        assert_eq!(8, neighbours.len());
+        assert!(neighbours.contains(&Location(4, 4)));
+        assert!(neighbours.contains(&Location(4, 5)));
+        assert!(neighbours.contains(&Location(4, 6)));
+        assert!(neighbours.contains(&Location(5, 4)));
+        assert!(neighbours.contains(&Location(5, 6)));
+        assert!(neighbours.contains(&Location(6, 4)));
+        assert!(neighbours.contains(&Location(6, 5)));
+        assert!(neighbours.contains(&Location(6, 6)));
     }
 
     #[test]

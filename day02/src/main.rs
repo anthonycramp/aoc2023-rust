@@ -321,7 +321,6 @@ mod tests {
         }
     }
     #[test]
-    #[ignore = "not yet implemented"]
     fn test_part2() {
         let test_cases = [TestCase {
             input: TEST_INPUT,

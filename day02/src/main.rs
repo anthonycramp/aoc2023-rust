@@ -259,6 +259,17 @@ mod tests {
     }
 
     #[test]
+    fn test_minimum_game_bag() {
+        let test_cases = [TestCase {
+            input: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+            expected: GameBag::new(4, 2, 6),
+        }];
+        for TestCase { input, expected } in test_cases {
+            assert_eq!(expected, Game::from(input).get_minimum_game_bag());
+        }
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part2() {
         let test_cases = [TestCase {

@@ -137,6 +137,29 @@ mod tests {
                 .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
                 .add_hand(Hand::default().set_green(2))
         ));
+        assert!(game_bag.is_game_possible(
+            &Game::new(2)
+                .add_hand(Hand::default().set_blue(1).set_green(2))
+                .add_hand(Hand::default().set_green(3).set_blue(4).set_red(1))
+                .add_hand(Hand::default().set_green(1).set_blue(1))
+        ));
+        assert!(!game_bag.is_game_possible(
+            &Game::new(3)
+                .add_hand(Hand::default().set_green(8).set_blue(6).set_red(20))
+                .add_hand(Hand::default().set_blue(5).set_red(4).set_green(13))
+                .add_hand(Hand::default().set_green(5).set_red(1))
+        ));
+        assert!(!game_bag.is_game_possible(
+            &Game::new(4)
+                .add_hand(Hand::default().set_green(1).set_red(3).set_blue(6))
+                .add_hand(Hand::default().set_green(3).set_red(6))
+                .add_hand(Hand::default().set_green(3).set_blue(15).set_red(14))
+        ));
+        assert!(game_bag.is_game_possible(
+            &Game::new(5)
+                .add_hand(Hand::default().set_red(6).set_blue(1).set_green(3))
+                .add_hand(Hand::default().set_blue(2).set_red(1).set_green(2))
+        ));
     }
 
     #[test]

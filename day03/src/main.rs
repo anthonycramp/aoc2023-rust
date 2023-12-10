@@ -41,6 +41,7 @@ mod tests {
     fn test_get_integer_at_location() {
         let row1 = "467..114..";
         assert_eq!(467, get_integer_at_location(row1, 0));
+        assert_eq!(467, get_integer_at_location(row1, 1));
         assert_eq!(114, get_integer_at_location(row1, 5));
     }
 

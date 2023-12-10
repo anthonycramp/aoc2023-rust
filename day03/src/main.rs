@@ -28,10 +28,15 @@ fn get_integer_at_location(row: &str, location: usize) -> u32 {
     // need to walk backward from location until we hit start of row
     // or we find a non-digit location
     let mut number_start_index = location;
-    while number_start_index > 0 {
+    loop {
         if !row_bytes[number_start_index].is_ascii_digit() {
             // we've gone one step before the integer, step forward once
             number_start_index += 1;
+            break;
+        }
+
+        if number_start_index == 0 {
+            // can't step back further, so break
             break;
         }
 
@@ -77,7 +82,18 @@ mod tests {
         let row1 = "467..114..";
         assert_eq!(467, get_integer_at_location(row1, 0));
         assert_eq!(467, get_integer_at_location(row1, 1));
+        assert_eq!(467, get_integer_at_location(row1, 2));
         assert_eq!(114, get_integer_at_location(row1, 5));
+        assert_eq!(114, get_integer_at_location(row1, 6));
+        assert_eq!(114, get_integer_at_location(row1, 7));
+
+        let row2 = ".664.598..";
+        assert_eq!(664, get_integer_at_location(row2, 2));
+        assert_eq!(598, get_integer_at_location(row2, 7));
+
+        let row3 = ".......45";
+        assert_eq!(45, get_integer_at_location(row3, 7));
+        assert_eq!(45, get_integer_at_location(row3, 8));
     }
 
     #[test]

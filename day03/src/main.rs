@@ -97,6 +97,13 @@ mod tests {
     }
 
     #[test]
+    fn test_get_neighbours_of_location() {
+        let neighbours = get_neighbours_of_location(Location(0, 0), 10, 10);
+        assert_eq!(3, neighbours.len());
+        assert!(neighbours.contains(Location(0, 1)));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [

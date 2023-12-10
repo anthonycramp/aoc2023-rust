@@ -106,7 +106,7 @@ impl From<&str> for Hand {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 struct Game {
     id: u32,
     hands: Vec<Hand>,

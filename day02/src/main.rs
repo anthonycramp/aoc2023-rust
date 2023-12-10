@@ -21,7 +21,11 @@ fn part1(input: &str) -> i32 {
 
 // replace return type as required by the problem
 fn part2(input: &str) -> i32 {
-    0
+    let games = input.lines().map(|l| Game::from(l.trim()));
+    games
+        .map(|g| g.get_minimum_game_bag())
+        .map(|gb| gb.power())
+        .sum::<u32>() as i32
 }
 
 #[derive(Debug, PartialEq)]

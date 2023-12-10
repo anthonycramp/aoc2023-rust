@@ -301,6 +301,16 @@ mod tests {
     }
 
     #[test]
+    fn test_game_bag_power() {
+        let test_cases = [TestCase {
+            input: GameBag::new(4, 2, 6),
+            expected: 48,
+        }];
+        for TestCase { input, expected } in test_cases {
+            assert_eq!(expected, input.power());
+        }
+    }
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part2() {
         let test_cases = [TestCase {

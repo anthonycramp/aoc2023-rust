@@ -45,6 +45,10 @@ impl GameBag {
 
         is_hand_possible
     }
+
+    fn is_game_possible(&self, game: &Game) -> bool {
+        game.hands.iter().all(|h| self.is_hand_possible(h))
+    }
 }
 
 struct Hand {
@@ -79,6 +83,23 @@ impl Hand {
         self
     }
 }
+
+struct Game {
+    id: u32,
+    hands: Vec<Hand>,
+}
+
+impl Game {
+    fn new(id: u32) -> Self {
+        Self { id, hands: vec![] }
+    }
+
+    fn add_hand(mut self, hand: Hand) -> Self {
+        self.hands.push(hand);
+        self
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -111,7 +132,7 @@ mod tests {
     fn test_is_game_possible() {
         let game_bag = GameBag::new(12, 13, 14);
         assert!(game_bag.is_game_possible(
-            &Game::default()
+            &Game::new(1)
                 .add_hand(Hand::default().set_blue(3).set_red(4))
                 .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
                 .add_hand(Hand::default().set_green(2))

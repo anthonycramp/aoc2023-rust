@@ -221,13 +221,22 @@ mod tests {
 
     #[test]
     fn test_parse_game() {
-        let test_cases = [TestCase {
-            input: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
-            expected: Game::new(1)
-                .add_hand(Hand::default().set_blue(3).set_red(4))
-                .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
-                .add_hand(Hand::default().set_green(2)),
-        }];
+        let test_cases = [
+            TestCase {
+                input: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+                expected: Game::new(1)
+                    .add_hand(Hand::default().set_blue(3).set_red(4))
+                    .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
+                    .add_hand(Hand::default().set_green(2)),
+            },
+            TestCase {
+                input: "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red",
+                expected: Game::new(3)
+                    .add_hand(Hand::default().set_green(8).set_blue(6).set_red(20))
+                    .add_hand(Hand::default().set_blue(5).set_red(4).set_green(13))
+                    .add_hand(Hand::default().set_green(5).set_red(1)),
+            },
+        ];
         for TestCase { input, expected } in test_cases {
             assert_eq!(expected, Game::from(input));
         }

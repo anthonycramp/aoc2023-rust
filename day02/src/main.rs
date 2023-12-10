@@ -57,6 +57,10 @@ impl GameBag {
     fn is_game_possible(&self, game: &Game) -> bool {
         game.hands.iter().all(|h| self.is_hand_possible(h))
     }
+
+    fn power(&self) -> u32 {
+        self.red * self.green * self.blue
+    }
 }
 
 #[derive(Debug, PartialEq)]

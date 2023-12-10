@@ -202,6 +202,20 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_game() {
+        let test_cases = [TestCase {
+            input: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+            expected: Game::new(1)
+                .add_hand(Hand::default().set_blue(3).set_red(4))
+                .add_hand(Hand::default().set_red(1).set_green(2).set_blue(6))
+                .add_hand(Hand::default().set_green(6)),
+        }];
+        for TestCase { input, expected } in test_cases {
+            assert_eq!(expected, Game::from(input));
+        }
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

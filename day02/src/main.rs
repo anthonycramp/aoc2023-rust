@@ -85,6 +85,12 @@ impl Hand {
     }
 }
 
+impl From<&str> for Hand {
+    fn from(value: &str) -> Self {
+        Hand::default()
+    }
+}
+
 struct Game {
     id: u32,
     hands: Vec<Hand>,

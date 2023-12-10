@@ -28,18 +28,18 @@ impl GameBag {
         Self { red, green, blue }
     }
 
-    fn is_hand_possible(&self, game: &Hand) -> bool {
+    fn is_hand_possible(&self, hand: &Hand) -> bool {
         let mut is_hand_possible = true;
 
-        if let Some(red) = game.red {
+        if let Some(red) = hand.red {
             is_hand_possible = is_hand_possible && (red <= self.red);
         }
 
-        if let Some(green) = game.green {
+        if let Some(green) = hand.green {
             is_hand_possible = is_hand_possible && (green <= self.green);
         }
 
-        if let Some(blue) = game.blue {
+        if let Some(blue) = hand.blue {
             is_hand_possible = is_hand_possible && (blue <= self.blue);
         }
 

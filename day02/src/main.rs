@@ -87,7 +87,22 @@ impl Hand {
 
 impl From<&str> for Hand {
     fn from(value: &str) -> Self {
-        Hand::default()
+        let mut hand = Hand::default();
+        let cubes = value.split(", ");
+        for cube in cubes {
+            let cube_components: Vec<_> = cube.split_ascii_whitespace().collect();
+            assert_eq!(2, cube_components.len());
+            let number: u32 = cube_components[0].parse().unwrap();
+            let colour = cube_components[1];
+            match colour {
+                "red" => hand = hand.set_red(number),
+                "green" => hand = hand.set_green(number),
+                "blue" => hand = hand.set_blue(number),
+                _ => panic!("Unknown cube colour: {}", colour),
+            }
+        }
+
+        hand
     }
 }
 

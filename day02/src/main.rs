@@ -9,7 +9,12 @@ fn main() {
 
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
-    0
+    let game_bag = GameBag::new(12, 13, 14);
+    let games = input.lines().map(|l| Game::from(l.trim()));
+    games
+        .filter(|g| game_bag.is_game_possible(g))
+        .map(|g| g.id)
+        .sum::<u32>() as i32
 }
 
 // replace return type as required by the problem

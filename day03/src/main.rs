@@ -216,6 +216,15 @@ mod tests {
     }
 
     #[test]
+    fn test_get_symbol_at_schematic_location() {
+        let schematic = Schematic::from(TEST_INPUT);
+        assert_eq!(
+            Symbol::EMPTY,
+            schematic.get_symbol_at_location(Location(0, 0))
+        );
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [

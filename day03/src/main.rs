@@ -241,10 +241,20 @@ mod tests {
     #[test]
     fn test_get_symbol_at_schematic_location() {
         let schematic = Schematic::from(TEST_INPUT);
-        let test_cases = [TestCase {
-            input: Location(0, 0),
-            expected: Symbol::EMPTY,
-        }];
+        let test_cases = [
+            TestCase {
+                input: Location(0, 0),
+                expected: Symbol::DIGIT,
+            },
+            TestCase {
+                input: Location(0, 4),
+                expected: Symbol::EMPTY,
+            },
+            TestCase {
+                input: Location(1, 3),
+                expected: Symbol::SPECIAL,
+            },
+        ];
 
         for TestCase { input, expected } in test_cases {
             assert_eq!(expected, schematic.get_symbol_at_location(&input));

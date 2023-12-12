@@ -65,7 +65,7 @@ fn get_integer_at_location(row: &str, location: usize) -> u32 {
 #[derive(Debug, PartialEq)]
 struct Location(usize, usize);
 
-fn get_neighbours_of_location(location: Location, rows: usize, columns: usize) -> Vec<Location> {
+fn get_neighbours_of_location(location: &Location, rows: usize, columns: usize) -> Vec<Location> {
     let row_lower_bound = if location.0 == 0 {
         location.0
     } else {
@@ -119,7 +119,7 @@ impl From<&str> for Schematic {
 
         input
             .lines()
-            .for_each(|l| schematic.schematic.push(String::from(l)));
+            .for_each(|l| schematic.schematic.push(String::from(l.trim())));
 
         schematic
     }
@@ -136,6 +136,32 @@ impl Schematic {
         } else {
             Symbol::SPECIAL
         }
+    }
+
+    fn get_part_numbers_adjacent_to_location(&self, location: &Location) -> Vec<u32> {
+        println!(
+            "Getting part numbers adjacent to symbol {:?} at location {:?}",
+            self.get_symbol_at_location(location),
+            location
+        );
+        let mut part_numbers: Vec<_> =
+            get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len())
+                .iter()
+                .inspect(|l| {
+                    println!(
+                        "Neighbour {:?} has symbol {:?}",
+                        l,
+                        self.get_symbol_at_location(l)
+                    )
+                })
+                .filter(|l| self.get_symbol_at_location(l) == Symbol::DIGIT)
+                .inspect(|l| println!("Found digit at {:?}", l))
+                .map(|l| get_integer_at_location(self.schematic[l.0].as_str(), l.1))
+                .collect();
+        part_numbers.sort();
+        part_numbers.dedup();
+
+        part_numbers
     }
 }
 
@@ -177,35 +203,35 @@ mod tests {
     #[test]
     fn test_get_neighbours_of_location() {
         // test upper left corner
-        let neighbours = get_neighbours_of_location(Location(0, 0), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(0, 0), 10, 10);
         assert_eq!(3, neighbours.len());
         assert!(neighbours.contains(&Location(0, 1)));
         assert!(neighbours.contains(&Location(1, 0)));
         assert!(neighbours.contains(&Location(1, 1)));
 
         // test lower right corner
-        let neighbours = get_neighbours_of_location(Location(9, 9), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(9, 9), 10, 10);
         assert_eq!(3, neighbours.len());
         assert!(neighbours.contains(&Location(8, 9)));
         assert!(neighbours.contains(&Location(9, 8)));
         assert!(neighbours.contains(&Location(8, 8)));
 
         // test upper right corner
-        let neighbours = get_neighbours_of_location(Location(0, 9), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(0, 9), 10, 10);
         assert_eq!(3, neighbours.len());
         assert!(neighbours.contains(&Location(0, 8)));
         assert!(neighbours.contains(&Location(1, 9)));
         assert!(neighbours.contains(&Location(1, 8)));
 
         // test lower left corner
-        let neighbours = get_neighbours_of_location(Location(9, 0), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(9, 0), 10, 10);
         assert_eq!(3, neighbours.len());
         assert!(neighbours.contains(&Location(8, 0)));
         assert!(neighbours.contains(&Location(9, 1)));
         assert!(neighbours.contains(&Location(8, 1)));
 
         // test left edge
-        let neighbours = get_neighbours_of_location(Location(5, 0), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(5, 0), 10, 10);
         assert_eq!(5, neighbours.len());
         assert!(neighbours.contains(&Location(4, 0)));
         assert!(neighbours.contains(&Location(6, 0)));
@@ -214,7 +240,7 @@ mod tests {
         assert!(neighbours.contains(&Location(6, 1)));
 
         // test right edge
-        let neighbours = get_neighbours_of_location(Location(5, 9), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(5, 9), 10, 10);
         assert_eq!(5, neighbours.len());
         assert!(neighbours.contains(&Location(4, 9)));
         assert!(neighbours.contains(&Location(6, 9)));
@@ -223,7 +249,7 @@ mod tests {
         assert!(neighbours.contains(&Location(6, 8)));
 
         // test top edge
-        let neighbours = get_neighbours_of_location(Location(0, 5), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(0, 5), 10, 10);
         assert_eq!(5, neighbours.len());
         assert!(neighbours.contains(&Location(0, 4)));
         assert!(neighbours.contains(&Location(0, 6)));
@@ -232,7 +258,7 @@ mod tests {
         assert!(neighbours.contains(&Location(1, 6)));
 
         // test bottom edge
-        let neighbours = get_neighbours_of_location(Location(9, 5), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(9, 5), 10, 10);
         assert_eq!(5, neighbours.len());
         assert!(neighbours.contains(&Location(9, 4)));
         assert!(neighbours.contains(&Location(9, 6)));
@@ -241,7 +267,7 @@ mod tests {
         assert!(neighbours.contains(&Location(8, 6)));
 
         // test a centre location
-        let neighbours = get_neighbours_of_location(Location(5, 5), 10, 10);
+        let neighbours = get_neighbours_of_location(&Location(5, 5), 10, 10);
         assert_eq!(8, neighbours.len());
         assert!(neighbours.contains(&Location(4, 4)));
         assert!(neighbours.contains(&Location(4, 5)));
@@ -280,9 +306,10 @@ mod tests {
     fn test_get_part_numbers_adjacent_to_location() {
         let schematic = Schematic::from(TEST_INPUT);
         let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(1, 3));
+        println!("{:?}", part_numbers);
         assert_eq!(2, part_numbers.len());
-        assert!(part_numbers.contains(467));
-        assert!(part_numbers.contains(35));
+        assert!(part_numbers.contains(&467));
+        assert!(part_numbers.contains(&35));
     }
 
     #[test]

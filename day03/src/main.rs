@@ -9,7 +9,23 @@ fn main() {
 
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
-    0
+    let schematic = Schematic::from(input);
+
+    let mut sum = 0;
+
+    for row in 0..schematic.schematic.len() {
+        for col in 0..schematic.schematic[0].len() {
+            let location = Location(row, col);
+            if schematic.get_symbol_at_location(&location) == Symbol::SPECIAL {
+                sum += schematic
+                    .get_part_numbers_adjacent_to_location(&location)
+                    .iter()
+                    .sum::<u32>();
+            }
+        }
+    }
+
+    sum as i32
 }
 
 // replace return type as required by the problem

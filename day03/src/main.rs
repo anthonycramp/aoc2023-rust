@@ -101,6 +101,29 @@ fn get_neighbours_of_location(location: Location, rows: usize, columns: usize) -
     neighbours
 }
 
+#[derive(Debug, PartialEq)]
+enum Symbol {
+    EMPTY,
+    SPECIAL,
+    DIGIT,
+}
+
+struct Schematic {
+    schematic: Vec<String>,
+}
+
+impl From<&str> for Schematic {
+    fn from(value: &str) -> Self {
+        Schematic { schematic: vec![] }
+    }
+}
+
+impl Schematic {
+    fn get_symbol_at_location(&self, location: &Location) -> Symbol {
+        Symbol::EMPTY
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"467..114..
@@ -220,7 +243,7 @@ mod tests {
         let schematic = Schematic::from(TEST_INPUT);
         assert_eq!(
             Symbol::EMPTY,
-            schematic.get_symbol_at_location(Location(0, 0))
+            schematic.get_symbol_at_location(&Location(0, 0))
         );
     }
 

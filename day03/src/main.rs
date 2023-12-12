@@ -108,19 +108,34 @@ enum Symbol {
     DIGIT,
 }
 
+#[derive(Default)]
 struct Schematic {
     schematic: Vec<String>,
 }
 
 impl From<&str> for Schematic {
-    fn from(value: &str) -> Self {
-        Schematic { schematic: vec![] }
+    fn from(input: &str) -> Self {
+        let mut schematic = Schematic::default();
+
+        input
+            .lines()
+            .for_each(|l| schematic.schematic.push(String::from(l)));
+
+        schematic
     }
 }
 
 impl Schematic {
     fn get_symbol_at_location(&self, location: &Location) -> Symbol {
-        Symbol::EMPTY
+        let char_at_location = self.schematic[location.0].chars().nth(location.1).unwrap();
+
+        if char_at_location == '.' {
+            Symbol::EMPTY
+        } else if char_at_location.is_ascii_digit() {
+            Symbol::DIGIT
+        } else {
+            Symbol::SPECIAL
+        }
     }
 }
 

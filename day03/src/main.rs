@@ -326,6 +326,12 @@ mod tests {
         assert_eq!(2, part_numbers.len());
         assert!(part_numbers.contains(&467));
         assert!(part_numbers.contains(&35));
+
+        let schematic = Schematic::from(".....\n35.35\n..*..\n.....\n..*..");
+        let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(2, 2));
+        println!("{:?}", part_numbers);
+        assert_eq!(2, part_numbers.len());
+        assert!(part_numbers.iter().all(|pn| *pn == 35));
     }
 
     #[test]

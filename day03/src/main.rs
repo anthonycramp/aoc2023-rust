@@ -277,6 +277,15 @@ mod tests {
     }
 
     #[test]
+    fn test_get_part_numbers_adjacent_to_location() {
+        let schematic = Schematic::from(TEST_INPUT);
+        let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(1, 3));
+        assert_eq!(2, part_numbers.len());
+        assert!(part_numbers.contains(467));
+        assert!(part_numbers.contains(35));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [

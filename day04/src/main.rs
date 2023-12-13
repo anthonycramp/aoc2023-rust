@@ -1,3 +1,6 @@
+use core::num;
+use std::collections::HashSet;
+
 const DAY_NUMBER: &str = "04";
 const INPUT: &str = include_str!("../../inputs/day04.txt");
 // const INPUT: &str = "";
@@ -15,6 +18,42 @@ fn part1(input: &str) -> i32 {
 // replace return type as required by the problem
 fn part2(input: &str) -> i32 {
     0
+}
+
+#[derive(Default)]
+struct Card {
+    id: i32,
+    winning_numbers: HashSet<i32>,
+    selected_numbers: HashSet<i32>,
+}
+
+impl From<&str> for Card {
+    fn from(value: &str) -> Self {
+        let mut card = Self::default();
+
+        let first_split: Vec<_> = value.split(":").collect();
+        let card_header_split: Vec<_> = first_split[0].split_ascii_whitespace().collect();
+        let card_id = card_header_split[1].parse::<i32>().unwrap();
+
+        let numbers_split: Vec<_> = first_split[1].trim().split(" | ").collect();
+        println!("{:?}", numbers_split);
+        let winning_numbers: HashSet<_> = numbers_split[0]
+            .trim()
+            .split_ascii_whitespace()
+            .map(|n| n.parse::<i32>().unwrap())
+            .collect();
+        let selected_numbers: HashSet<_> = numbers_split[1]
+            .trim()
+            .split_ascii_whitespace()
+            .map(|n| n.parse::<i32>().unwrap())
+            .collect();
+
+        card.id = card_id;
+        card.winning_numbers = winning_numbers;
+        card.selected_numbers = selected_numbers;
+
+        card
+    }
 }
 
 #[cfg(test)]

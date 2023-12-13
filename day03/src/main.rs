@@ -126,6 +126,7 @@ enum Symbol {
     EMPTY,
     SPECIAL,
     DIGIT,
+    GEAR,
 }
 
 #[derive(Default)]
@@ -188,6 +189,11 @@ impl Schematic {
         }
 
         part_numbers
+    }
+
+    fn is_gear(&self, location: &Location) -> bool {
+        self.get_symbol_at_location(location) == Symbol::GEAR
+            && self.get_part_numbers_adjacent_to_location(location).len() == 2
     }
 }
 

@@ -13,8 +13,8 @@ fn part1(input: &str) -> i32 {
 
     let mut sum = 0;
 
-    for row in 0..schematic.schematic.len() {
-        for col in 0..schematic.schematic[0].len() {
+    for row in 0..schematic.rows {
+        for col in 0..schematic.columns {
             let location = Location(row, col);
             let symbol_at_location = schematic.get_symbol_at_location(&location);
             if symbol_at_location == Symbol::SPECIAL || symbol_at_location == Symbol::GEAR {
@@ -33,8 +33,8 @@ fn part1(input: &str) -> i32 {
 fn part2(input: &str) -> i32 {
     let schematic = Schematic::from(input);
     let mut sum = 0;
-    for row in 0..schematic.schematic.len() {
-        for col in 0..schematic.schematic[0].len() {
+    for row in 0..schematic.rows {
+        for col in 0..schematic.columns {
             let location = Location(row, col);
             if schematic.is_gear(&location) {
                 let part_numbers = schematic.get_part_numbers_adjacent_to_location(&location);
@@ -145,6 +145,8 @@ enum Symbol {
 #[derive(Default)]
 struct Schematic {
     schematic: Vec<String>,
+    rows: usize,
+    columns: usize,
 }
 
 impl From<&str> for Schematic {
@@ -154,6 +156,10 @@ impl From<&str> for Schematic {
         input
             .lines()
             .for_each(|l| schematic.schematic.push(String::from(l.trim())));
+
+        schematic.rows = schematic.schematic.len();
+        // numassume all rows have the same number of columns
+        schematic.columns = schematic.schematic[0].len();
 
         schematic
     }
@@ -176,8 +182,7 @@ impl Schematic {
 
     fn get_part_numbers_adjacent_to_location(&self, location: &Location) -> Vec<u32> {
         let mut part_numbers: Vec<_> = vec![];
-        let neighbours =
-            get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len());
+        let neighbours = get_neighbours_of_location(location, self.rows, self.columns);
         let mut last_location = None;
         let mut in_digit = false;
 

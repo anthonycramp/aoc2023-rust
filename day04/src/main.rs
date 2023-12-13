@@ -12,7 +12,11 @@ fn main() {
 
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
-    0
+    input
+        .lines()
+        .map(|l| Card::from(l.trim()))
+        .map(|c| c.get_score())
+        .sum::<i32>()
 }
 
 // replace return type as required by the problem

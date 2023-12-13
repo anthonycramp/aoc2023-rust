@@ -24,7 +24,7 @@ fn part2(input: &str) -> i32 {
     let mut card_counts = vec![1u32; cards.len()];
 
     for (index, card) in cards.iter().enumerate() {
-        // we get `count` copies of the next `score` cards
+        // we get `count` copies of the next `score` number of cards
         let score = card.get_number_of_matches();
         let count = card_counts[index];
         for index2 in 1..=score {
@@ -72,10 +72,7 @@ impl From<&str> for Card {
 
 impl Card {
     fn get_score(&self) -> i32 {
-        let number_of_matches = self
-            .winning_numbers
-            .intersection(&self.selected_numbers)
-            .count();
+        let number_of_matches = self.get_number_of_matches();
 
         if number_of_matches == 0 {
             0

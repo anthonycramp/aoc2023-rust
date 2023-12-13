@@ -91,6 +91,12 @@ mod tests {
     }
 
     #[test]
+    fn test_card_score() {
+        let card = Card::from("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53");
+        assert_eq!(8, card.get_score());
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

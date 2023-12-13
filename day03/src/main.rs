@@ -376,7 +376,11 @@ mod tests {
     fn test_is_gear() {
         let schematic = Schematic::from(TEST_INPUT);
         assert!(schematic.is_gear(&Location(1, 3)));
+        assert!(schematic.is_gear(&Location(8, 5)));
+        assert!(!schematic.is_gear(&Location(4, 3)));
+        assert!(!schematic.is_gear(&Location(3, 6)));
     }
+
     #[test]
     #[ignore = "not yet implemented"]
     fn test_part2() {

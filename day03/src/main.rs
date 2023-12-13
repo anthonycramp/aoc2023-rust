@@ -160,22 +160,25 @@ impl Schematic {
             self.get_symbol_at_location(location),
             location
         );
-        let mut part_numbers: Vec<_> =
-            get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len())
-                .iter()
-                .inspect(|l| {
-                    println!(
-                        "Neighbour {:?} has symbol {:?}",
-                        l,
-                        self.get_symbol_at_location(l)
-                    )
-                })
-                .filter(|l| self.get_symbol_at_location(l) == Symbol::DIGIT)
-                .inspect(|l| println!("Found digit at {:?}", l))
-                .map(|l| get_integer_at_location(self.schematic[l.0].as_str(), l.1))
-                .collect();
-        part_numbers.sort();
-        part_numbers.dedup();
+        let mut part_numbers: Vec<_> = vec![];
+        let neighbours =
+            get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len());
+        let mut in_digit = false;
+
+        for neighbour in neighbours {
+            match self.get_symbol_at_location(&neighbour) {
+                Symbol::DIGIT => {
+                    if !in_digit {
+                        part_numbers.push(get_integer_at_location(
+                            self.schematic[neighbour.0].as_str(),
+                            neighbour.1,
+                        ));
+                        in_digit = true;
+                    }
+                }
+                _ => in_digit = false,
+            }
+        }
 
         part_numbers
     }

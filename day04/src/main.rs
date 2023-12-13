@@ -1,4 +1,3 @@
-use core::num;
 use std::collections::HashSet;
 
 const DAY_NUMBER: &str = "04";
@@ -21,7 +20,19 @@ fn part1(input: &str) -> i32 {
 
 // replace return type as required by the problem
 fn part2(input: &str) -> i32 {
-    0
+    let cards: Vec<_> = input.lines().map(|l| Card::from(l.trim())).collect();
+    let mut card_counts = vec![1u32; cards.len()];
+
+    for (index, card) in cards.iter().enumerate() {
+        // we get `count` copies of the next `score` cards
+        let score = card.get_number_of_matches();
+        let count = card_counts[index];
+        for index2 in 1..=score {
+            let id_of_new_card_copy = index + index2;
+            card_counts[id_of_new_card_copy] += count;
+        }
+    }
+    card_counts.iter().sum::<u32>() as i32
 }
 
 #[derive(Default)]
@@ -71,6 +82,12 @@ impl Card {
         } else {
             2_i32.pow(number_of_matches as u32 - 1)
         }
+    }
+
+    fn get_number_of_matches(&self) -> usize {
+        self.winning_numbers
+            .intersection(&self.selected_numbers)
+            .count()
     }
 }
 
@@ -141,18 +158,11 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "not yet implemented"]
     fn test_part2() {
-        let test_cases = [
-            TestCase {
-                input: TEST_INPUT,
-                expected: 123,
-            },
-            TestCase {
-                input: "abc",
-                expected: 345,
-            },
-        ];
+        let test_cases = [TestCase {
+            input: TEST_INPUT,
+            expected: 30,
+        }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part2(*input), *expected);
         }

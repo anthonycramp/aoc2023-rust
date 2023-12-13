@@ -1,0 +1,61 @@
+const DAY_NUMBER: &str = "04";
+const INPUT: &str = include_str!("../../inputs/day04.txt");
+// const INPUT: &str = "";
+
+fn main() {
+    println!("Day {} Part 1: {:?}", DAY_NUMBER, part1(INPUT));
+    println!("Day {} Part 2: {:?}", DAY_NUMBER, part2(INPUT));
+}
+
+// replace return type as required by the problem
+fn part1(input: &str) -> i32 {
+    0
+}
+
+// replace return type as required by the problem
+fn part2(input: &str) -> i32 {
+    0
+}
+
+#[cfg(test)]
+mod tests {
+    const TEST_INPUT: &str = r"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
+    Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
+    Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
+    Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
+    Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
+    Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
+
+    use super::*;
+    use test_support::test_support::TestCase;
+
+    #[test]
+    #[ignore = "not yet implemented"]
+    fn test_part1() {
+        let test_cases = [TestCase {
+            input: TEST_INPUT,
+            expected: 13,
+        }];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(part1(*input), *expected);
+        }
+    }
+
+    #[test]
+    #[ignore = "not yet implemented"]
+    fn test_part2() {
+        let test_cases = [
+            TestCase {
+                input: TEST_INPUT,
+                expected: 123,
+            },
+            TestCase {
+                input: "abc",
+                expected: 345,
+            },
+        ];
+        for TestCase { input, expected } in test_cases.iter() {
+            assert_eq!(part2(*input), *expected);
+        }
+    }
+}

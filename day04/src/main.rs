@@ -40,7 +40,6 @@ impl From<&str> for Card {
         let card_id = card_header_split[1].parse::<i32>().unwrap();
 
         let numbers_split: Vec<_> = first_split[1].trim().split(" | ").collect();
-        println!("{:?}", numbers_split);
         let winning_numbers: HashSet<_> = numbers_split[0]
             .trim()
             .split_ascii_whitespace()

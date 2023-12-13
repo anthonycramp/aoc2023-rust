@@ -142,6 +142,20 @@ enum Symbol {
     GEAR,
 }
 
+impl From<char> for Symbol {
+    fn from(value: char) -> Self {
+        if value.is_ascii_digit() {
+            return Symbol::DIGIT;
+        }
+
+        match value {
+            '.' => Symbol::EMPTY,
+            '*' => Symbol::GEAR,
+            _ => Symbol::SPECIAL,
+        }
+    }
+}
+
 #[derive(Default)]
 struct Schematic {
     schematic: Vec<String>,
@@ -168,16 +182,7 @@ impl From<&str> for Schematic {
 impl Schematic {
     fn get_symbol_at_location(&self, location: &Location) -> Symbol {
         let char_at_location = self.schematic[location.0].chars().nth(location.1).unwrap();
-
-        if char_at_location == '.' {
-            Symbol::EMPTY
-        } else if char_at_location == '*' {
-            Symbol::GEAR
-        } else if char_at_location.is_ascii_digit() {
-            Symbol::DIGIT
-        } else {
-            Symbol::SPECIAL
-        }
+        Symbol::from(char_at_location)
     }
 
     fn get_part_numbers_adjacent_to_location(&self, location: &Location) -> Vec<u32> {

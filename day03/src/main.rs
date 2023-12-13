@@ -78,7 +78,7 @@ fn get_integer_at_location(row: &str, location: usize) -> u32 {
 }
 
 /// Represent a row and column in the engine schematic
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 struct Location(usize, usize);
 
 fn get_neighbours_of_location(location: &Location, rows: usize, columns: usize) -> Vec<Location> {
@@ -115,6 +115,10 @@ fn get_neighbours_of_location(location: &Location, rows: usize, columns: usize) 
     }
 
     neighbours
+}
+
+fn distance(loc1: &Location, loc2: &Location) -> i32 {
+    (loc1.0 as i32 - loc2.0 as i32).abs() + (loc1.1 as i32 - loc2.1 as i32).abs()
 }
 
 #[derive(Debug, PartialEq)]
@@ -163,9 +167,17 @@ impl Schematic {
         let mut part_numbers: Vec<_> = vec![];
         let neighbours =
             get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len());
+        let mut last_location = None;
         let mut in_digit = false;
 
-        for neighbour in neighbours {
+        for (index, neighbour) in neighbours.iter().enumerate() {
+            if let Some(loc) = last_location {
+                if distance(&neighbour, loc) > 1 {
+                    in_digit = false;
+                }
+            }
+
+            last_location = Some(&neighbours[index]);
             match self.get_symbol_at_location(&neighbour) {
                 Symbol::DIGIT => {
                     if !in_digit {
@@ -335,6 +347,13 @@ mod tests {
         println!("{:?}", part_numbers);
         assert_eq!(2, part_numbers.len());
         assert!(part_numbers.iter().all(|pn| *pn == 35));
+
+        let schematic = Schematic::from("...\n3*5\n...");
+        let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(1, 1));
+        println!("{:?}", part_numbers);
+        assert_eq!(2, part_numbers.len());
+        assert!(part_numbers.contains(&3));
+        assert!(part_numbers.contains(&5));
     }
 
     #[test]

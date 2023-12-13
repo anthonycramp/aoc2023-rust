@@ -185,12 +185,19 @@ impl Schematic {
         Symbol::from(char_at_location)
     }
 
+    // returns a vector of part numbers (integers) that are at neighbouring locations
     fn get_part_numbers_adjacent_to_location(&self, location: &Location) -> Vec<u32> {
         let mut part_numbers: Vec<_> = vec![];
         let neighbours = get_neighbours_of_location(location, self.rows, self.columns);
-        let mut last_location = None;
+
+        // in_digit guards against duplicating the same part number because the digits
+        // of the part number exist in multuple neighbouring locations. For two locations to
+        // be part of the same part number, they have to be adjacent (have a distance of one)
+        // and they have to both contain digits. This logic is captured below
         let mut in_digit = false;
 
+        // keep track of the last location so we can test if two neighbours are adjacent
+        let mut last_location = None;
         for (index, neighbour) in neighbours.iter().enumerate() {
             if let Some(loc) = last_location {
                 if distance(&neighbour, loc) > 1 {
@@ -202,6 +209,8 @@ impl Schematic {
             match self.get_symbol_at_location(&neighbour) {
                 Symbol::DIGIT => {
                     if !in_digit {
+                        // the first time we see a digit, we capture the part number
+                        // and then flag so we don't capture it again
                         part_numbers.push(get_integer_at_location(
                             self.schematic[neighbour.0].as_str(),
                             neighbour.1,
@@ -209,13 +218,15 @@ impl Schematic {
                         in_digit = true;
                     }
                 }
-                _ => in_digit = false,
+                _ => in_digit = false, // any non-digit breaks us out
             }
         }
 
         part_numbers
     }
 
+    // a location reprsents a gear if it contains a gear symbol and it has exactly
+    // two neighbouring part numbers
     fn is_gear(&self, location: &Location) -> bool {
         self.get_symbol_at_location(location) == Symbol::GEAR
             && self.get_part_numbers_adjacent_to_location(location).len() == 2

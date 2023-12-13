@@ -30,6 +30,28 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
+    fn test_parse_card() {
+        let card = Card::from("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53");
+        assert_eq!(1, card.id);
+        assert_eq!(5, card.winning_numbers.len());
+        assert!(card.winning_numbers.contains(&41));
+        assert!(card.winning_numbers.contains(&48));
+        assert!(card.winning_numbers.contains(&83));
+        assert!(card.winning_numbers.contains(&86));
+        assert!(card.winning_numbers.contains(&17));
+
+        assert_eq!(8, card.selected_numbers.len());
+        assert!(card.selected_numbers.contains(&83));
+        assert!(card.selected_numbers.contains(&86));
+        assert!(card.selected_numbers.contains(&6));
+        assert!(card.selected_numbers.contains(&31));
+        assert!(card.selected_numbers.contains(&17));
+        assert!(card.selected_numbers.contains(&9));
+        assert!(card.selected_numbers.contains(&48));
+        assert!(card.selected_numbers.contains(&53));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

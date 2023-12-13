@@ -360,6 +360,11 @@ mod tests {
     }
 
     #[test]
+    fn test_is_gear() {
+        let schematic = Schematic::from(TEST_INPUT);
+        assert!(schematic.is_gear(&Location(1, 3)));
+    }
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part2() {
         let test_cases = [

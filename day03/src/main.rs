@@ -159,11 +159,6 @@ impl Schematic {
     }
 
     fn get_part_numbers_adjacent_to_location(&self, location: &Location) -> Vec<u32> {
-        println!(
-            "Getting part numbers adjacent to symbol {:?} at location {:?}",
-            self.get_symbol_at_location(location),
-            location
-        );
         let mut part_numbers: Vec<_> = vec![];
         let neighbours =
             get_neighbours_of_location(location, self.schematic.len(), self.schematic[0].len());
@@ -337,20 +332,17 @@ mod tests {
     fn test_get_part_numbers_adjacent_to_location() {
         let schematic = Schematic::from(TEST_INPUT);
         let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(1, 3));
-        println!("{:?}", part_numbers);
         assert_eq!(2, part_numbers.len());
         assert!(part_numbers.contains(&467));
         assert!(part_numbers.contains(&35));
 
         let schematic = Schematic::from(".....\n35.35\n..*..\n.....\n..*..");
         let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(2, 2));
-        println!("{:?}", part_numbers);
         assert_eq!(2, part_numbers.len());
         assert!(part_numbers.iter().all(|pn| *pn == 35));
 
         let schematic = Schematic::from("...\n3*5\n...");
         let part_numbers = schematic.get_part_numbers_adjacent_to_location(&Location(1, 1));
-        println!("{:?}", part_numbers);
         assert_eq!(2, part_numbers.len());
         assert!(part_numbers.contains(&3));
         assert!(part_numbers.contains(&5));

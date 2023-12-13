@@ -16,7 +16,8 @@ fn part1(input: &str) -> i32 {
     for row in 0..schematic.schematic.len() {
         for col in 0..schematic.schematic[0].len() {
             let location = Location(row, col);
-            if schematic.get_symbol_at_location(&location) == Symbol::SPECIAL {
+            let symbol_at_location = schematic.get_symbol_at_location(&location);
+            if symbol_at_location == Symbol::SPECIAL || symbol_at_location == Symbol::GEAR {
                 sum += schematic
                     .get_part_numbers_adjacent_to_location(&location)
                     .iter()
@@ -152,6 +153,8 @@ impl Schematic {
 
         if char_at_location == '.' {
             Symbol::EMPTY
+        } else if char_at_location == '*' {
+            Symbol::GEAR
         } else if char_at_location.is_ascii_digit() {
             Symbol::DIGIT
         } else {
@@ -325,6 +328,10 @@ mod tests {
             },
             TestCase {
                 input: Location(1, 3),
+                expected: Symbol::GEAR,
+            },
+            TestCase {
+                input: Location(3, 6),
                 expected: Symbol::SPECIAL,
             },
         ];

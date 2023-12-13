@@ -56,6 +56,21 @@ impl From<&str> for Card {
     }
 }
 
+impl Card {
+    fn get_score(&self) -> i32 {
+        let number_of_matches = self
+            .winning_numbers
+            .intersection(&self.selected_numbers)
+            .count();
+
+        if number_of_matches == 0 {
+            0
+        } else {
+            2_i32.pow(number_of_matches as u32 - 1)
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53

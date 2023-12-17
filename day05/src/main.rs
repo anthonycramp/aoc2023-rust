@@ -127,6 +127,13 @@ mod tests {
         assert_eq!(DestinationValue::IN(51), almanac_range.map(99));
         assert_eq!(DestinationValue::OUT(100), almanac_range.map(100));
         assert_eq!(DestinationValue::OUT(97), almanac_range.map(97));
+        let almanac_range = AlmanacRange::new(52, 50, 48);
+        assert_eq!(DestinationValue::OUT(98), almanac_range.map(98));
+        assert_eq!(DestinationValue::OUT(99), almanac_range.map(99));
+        assert_eq!(DestinationValue::OUT(100), almanac_range.map(100));
+        assert_eq!(DestinationValue::IN(97), almanac_range.map(95));
+        assert_eq!(DestinationValue::IN(52), almanac_range.map(50));
+        assert_eq!(DestinationValue::IN(99), almanac_range.map(97));
     }
 
     #[test]

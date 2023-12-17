@@ -34,7 +34,7 @@ impl AlmanacRange {
     }
 
     fn map(&self, source_value: i32) -> Option<i32> {
-        Some(50)
+        Some(source_value - (self.source_range_start - self.destination_range_start))
     }
 }
 

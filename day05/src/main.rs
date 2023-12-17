@@ -17,6 +17,27 @@ fn part2(input: &str) -> i32 {
     0
 }
 
+#[derive(Default, Debug)]
+struct AlmanacRange {
+    destination_range_start: i32,
+    source_range_start: i32,
+    range_length: i32,
+}
+
+impl AlmanacRange {
+    fn new(destination_range_start: i32, source_range_start: i32, range_length: i32) -> Self {
+        Self {
+            destination_range_start,
+            source_range_start,
+            range_length,
+        }
+    }
+
+    fn map(&self, source_value: i32) -> Option<i32> {
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"seeds: 79 14 55 13

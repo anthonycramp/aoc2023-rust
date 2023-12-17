@@ -95,6 +95,17 @@ mod tests {
         assert_eq!(None, almanac_range.map(97));
     }
 
+    fn test_map_entry() {
+        fn test_map_range() {
+            let almanac_entry = AlmanacEntry::default()
+                .add_range(AlmanacRange::new(50, 98, 2))
+                .add_range(AlmanacRange::new(52, 50, 48));
+            assert_eq!(Some(50), almanac_entry.map(98));
+            assert_eq!(Some(51), almanac_entry.map(99));
+            assert_eq!(None, almanac_entry.map(100));
+        }
+    }
+
     #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {

@@ -127,6 +127,9 @@ mod tests {
             let almanac_entry = AlmanacEntry::default()
                 .add_range(AlmanacRange::new(50, 98, 2))
                 .add_range(AlmanacRange::new(52, 50, 48));
+            assert_eq!(None, almanac_entry.map(49));
+            assert_eq!(Some(52), almanac_entry.map(50));
+            assert_eq!(Some(99), almanac_entry.map(97));
             assert_eq!(Some(50), almanac_entry.map(98));
             assert_eq!(Some(51), almanac_entry.map(99));
             assert_eq!(None, almanac_entry.map(100));

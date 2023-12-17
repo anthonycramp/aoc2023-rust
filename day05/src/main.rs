@@ -81,6 +81,7 @@ mod tests {
     fn test_map_range() {
         let almanac_range = AlmanacRange::new(50, 98, 2);
         assert_eq!(Some(50), almanac_range.map(98));
+        assert_eq!(Some(51), almanac_range.map(99));
     }
 
     #[test]

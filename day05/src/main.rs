@@ -17,6 +17,12 @@ fn part2(input: &str) -> i32 {
     0
 }
 
+#[derive(Debug, PartialEq)]
+enum DestinationValue {
+    IN(i32),
+    OUT(i32),
+}
+
 #[derive(Default, Debug)]
 struct AlmanacRange {
     destination_range_start: i32,
@@ -38,11 +44,13 @@ impl AlmanacRange {
             && source_value < self.source_range_start + self.range_length
     }
 
-    fn map(&self, source_value: i32) -> Option<i32> {
+    fn map(&self, source_value: i32) -> DestinationValue {
         if self.in_source_range(source_value) {
-            Some(source_value - (self.source_range_start - self.destination_range_start))
+            DestinationValue::IN(
+                source_value - (self.source_range_start - self.destination_range_start),
+            )
         } else {
-            None
+            DestinationValue::OUT(source_value)
         }
     }
 }

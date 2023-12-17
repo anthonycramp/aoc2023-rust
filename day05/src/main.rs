@@ -19,8 +19,8 @@ fn part2(input: &str) -> i32 {
 
 #[derive(Debug, PartialEq)]
 enum DestinationValue {
-    IN(i32),
-    OUT(i32),
+    In(i32),
+    Out(i32),
 }
 
 #[derive(Default, Debug)]
@@ -46,23 +46,18 @@ impl AlmanacRange {
 
     fn map(&self, source_value: i32) -> DestinationValue {
         if self.in_source_range(source_value) {
-            DestinationValue::IN(
+            DestinationValue::In(
                 source_value - (self.source_range_start - self.destination_range_start),
             )
         } else {
-            DestinationValue::OUT(source_value)
+            DestinationValue::Out(source_value)
         }
     }
 }
 
+#[derive(Default, Debug)]
 struct AlmanacEntry {
     ranges: Vec<AlmanacRange>,
-}
-
-impl Default for AlmanacEntry {
-    fn default() -> Self {
-        AlmanacEntry { ranges: vec![] }
-    }
 }
 
 impl AlmanacEntry {
@@ -76,7 +71,7 @@ impl AlmanacEntry {
             self.ranges.iter().map(|r| r.map(source_value)).collect();
 
         for destination_value in destination_value_possibilities {
-            if let DestinationValue::IN(val) = destination_value {
+            if let DestinationValue::In(val) = destination_value {
                 return val;
             }
         }
@@ -127,17 +122,17 @@ mod tests {
     #[test]
     fn test_map_range() {
         let almanac_range = AlmanacRange::new(50, 98, 2);
-        assert_eq!(DestinationValue::IN(50), almanac_range.map(98));
-        assert_eq!(DestinationValue::IN(51), almanac_range.map(99));
-        assert_eq!(DestinationValue::OUT(100), almanac_range.map(100));
-        assert_eq!(DestinationValue::OUT(97), almanac_range.map(97));
+        assert_eq!(DestinationValue::In(50), almanac_range.map(98));
+        assert_eq!(DestinationValue::In(51), almanac_range.map(99));
+        assert_eq!(DestinationValue::Out(100), almanac_range.map(100));
+        assert_eq!(DestinationValue::Out(97), almanac_range.map(97));
         let almanac_range = AlmanacRange::new(52, 50, 48);
-        assert_eq!(DestinationValue::OUT(98), almanac_range.map(98));
-        assert_eq!(DestinationValue::OUT(99), almanac_range.map(99));
-        assert_eq!(DestinationValue::OUT(100), almanac_range.map(100));
-        assert_eq!(DestinationValue::IN(97), almanac_range.map(95));
-        assert_eq!(DestinationValue::IN(52), almanac_range.map(50));
-        assert_eq!(DestinationValue::IN(99), almanac_range.map(97));
+        assert_eq!(DestinationValue::Out(98), almanac_range.map(98));
+        assert_eq!(DestinationValue::Out(99), almanac_range.map(99));
+        assert_eq!(DestinationValue::Out(100), almanac_range.map(100));
+        assert_eq!(DestinationValue::In(97), almanac_range.map(95));
+        assert_eq!(DestinationValue::In(52), almanac_range.map(50));
+        assert_eq!(DestinationValue::In(99), almanac_range.map(97));
     }
 
     #[test]

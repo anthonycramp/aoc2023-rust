@@ -47,6 +47,32 @@ impl AlmanacRange {
     }
 }
 
+struct AlmanacEntry {
+    ranges: Vec<AlmanacRange>,
+}
+
+impl Default for AlmanacEntry {
+    fn default() -> Self {
+        AlmanacEntry { ranges: vec![] }
+    }
+}
+
+impl AlmanacEntry {
+    fn add_range(mut self, range: AlmanacRange) -> Self {
+        self.ranges.push(range);
+        self
+    }
+
+    fn map(&self, source_value: i32) -> Option<i32> {
+        for almanac_range in &self.ranges {
+            if almanac_range.in_source_range(source_value) {
+                return Some(source_value);
+            }
+        }
+        None
+    }
+}
+
 #[cfg(test)]
 mod tests {
     const TEST_INPUT: &str = r"seeds: 79 14 55 13
@@ -95,6 +121,7 @@ mod tests {
         assert_eq!(None, almanac_range.map(97));
     }
 
+    #[test]
     fn test_map_entry() {
         fn test_map_range() {
             let almanac_entry = AlmanacEntry::default()

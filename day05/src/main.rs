@@ -33,13 +33,16 @@ impl AlmanacRange {
         }
     }
 
+    fn in_source_range(&self, source_value: i32) -> bool {
+        source_value >= self.source_range_start
+            && source_value < self.source_range_start + self.range_length
+    }
+
     fn map(&self, source_value: i32) -> Option<i32> {
-        if source_value < self.source_range_start
-            || source_value >= self.source_range_start + self.range_length
-        {
-            None
-        } else {
+        if self.in_source_range(source_value) {
             Some(source_value - (self.source_range_start - self.destination_range_start))
+        } else {
+            None
         }
     }
 }

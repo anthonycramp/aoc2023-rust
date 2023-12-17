@@ -57,6 +57,12 @@ mod tests {
     use test_support::test_support::TestCase;
 
     #[test]
+    fn test_map_range() {
+        let almanac_range = AlmanacRange::new(50, 98, 2);
+        assert_eq!(Some(50), almanac_range.map(98));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

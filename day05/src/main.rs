@@ -71,13 +71,17 @@ impl AlmanacEntry {
         self
     }
 
-    fn map(&self, source_value: i32) -> Option<i32> {
-        for almanac_range in &self.ranges {
-            if almanac_range.in_source_range(source_value) {
-                return Some(source_value);
+    fn map(&self, source_value: i32) -> i32 {
+        let destination_value_possibilities: Vec<_> =
+            self.ranges.iter().map(|r| r.map(source_value)).collect();
+
+        for destination_value in destination_value_possibilities {
+            if let DestinationValue::IN(val) = destination_value {
+                return val;
             }
         }
-        None
+
+        source_value
     }
 }
 

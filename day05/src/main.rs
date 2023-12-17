@@ -92,6 +92,7 @@ mod tests {
         assert_eq!(Some(50), almanac_range.map(98));
         assert_eq!(Some(51), almanac_range.map(99));
         assert_eq!(None, almanac_range.map(100));
+        assert_eq!(None, almanac_range.map(97));
     }
 
     #[test]

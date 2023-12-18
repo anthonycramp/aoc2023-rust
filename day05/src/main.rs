@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 const DAY_NUMBER: &str = "05";
 const INPUT: &str = include_str!("../../inputs/day05.txt");
 // const INPUT: &str = "";
@@ -58,9 +60,19 @@ impl AlmanacRange {
 #[derive(Default, Debug)]
 struct AlmanacEntry {
     ranges: Vec<AlmanacRange>,
+    source_parameter: String,
+    destination_parameter: String,
 }
 
 impl AlmanacEntry {
+    fn new(source_parameter: &str, destination_parameter: &str) -> Self {
+        let mut entry = Self::default();
+        entry.source_parameter = String::from(source_parameter);
+        entry.destination_parameter = String::from(destination_parameter);
+
+        entry
+    }
+
     fn add_range(mut self, range: AlmanacRange) -> Self {
         self.ranges.push(range);
         self
@@ -77,6 +89,22 @@ impl AlmanacEntry {
         }
 
         source_value
+    }
+}
+
+#[derive(Default, Debug)]
+struct Almanac {
+    entries: HashMap<String, AlmanacEntry>,
+}
+
+impl Almanac {
+    fn add_entry(mut self, entry: AlmanacEntry) -> Self {
+        self.entries.insert(entry.source_parameter.clone(), entry);
+        self
+    }
+
+    fn map(&self, source_parameter: &str, source_value: i32, destination_parameter: &str) -> i32 {
+        0
     }
 }
 

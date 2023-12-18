@@ -153,6 +153,25 @@ mod tests {
     }
 
     #[test]
+    fn test_map_almanac() {
+        let almanac = Almanac::default()
+            .add_entry(
+                AlmanacEntry::new("seed", "soil")
+                    .add_range(AlmanacRange::new(50, 98, 2))
+                    .add_range(AlmanacRange::new(52, 50, 48)),
+            )
+            .add_entry(
+                AlmanacEntry::new("soil", "fertilizer")
+                    .add_range(AlmanacRange::new(0, 15, 37))
+                    .add_range(AlmanacRange::new(37, 52, 2))
+                    .add_range(AlmanacRange::new(39, 0, 15)),
+            );
+        assert_eq!(81, almanac.map("seed", 79, "soil"));
+        assert_eq!(81, almanac.map("seed", 79, "fertilizer"));
+        assert_eq!(53, almanac.map("seed", 14, "fertilizer"));
+    }
+
+    #[test]
     #[ignore = "not yet implemented"]
     fn test_part1() {
         let test_cases = [TestCase {

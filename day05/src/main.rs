@@ -104,7 +104,22 @@ impl Almanac {
     }
 
     fn map(&self, source_parameter: &str, source_value: i32, destination_parameter: &str) -> i32 {
-        0
+        let mut current_parameter = String::from(source_parameter);
+        let mut current_value = source_value;
+
+        while current_parameter != destination_parameter {
+            if let Some(entry) = self.entries.get(&current_parameter) {
+                current_parameter = entry.destination_parameter.clone();
+                current_value = entry.map(current_value);
+            } else {
+                panic!(
+                    "Unknown alamanac entry source parameter: {}",
+                    current_parameter
+                );
+            }
+        }
+
+        current_value
     }
 }
 

@@ -299,18 +299,11 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "not yet implemented"]
     fn test_part2() {
-        let test_cases = [
-            TestCase {
-                input: TEST_INPUT,
-                expected: 123,
-            },
-            TestCase {
-                input: "abc",
-                expected: 345,
-            },
-        ];
+        let test_cases = [TestCase {
+            input: TEST_INPUT,
+            expected: 46,
+        }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part2(*input), *expected);
         }

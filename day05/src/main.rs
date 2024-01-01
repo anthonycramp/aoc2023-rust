@@ -27,7 +27,18 @@ fn part1(input: &str) -> i64 {
 
 // replace return type as required by the problem
 fn part2(input: &str) -> i64 {
-    0
+    let source_parameter = String::from("seed");
+    let destination_parameter = String::from("location");
+    let input_value_string = input.lines().next().unwrap();
+    let input_values: Vec<_> = parse_seeds_2(input_value_string);
+
+    let almanac = Almanac::from(input);
+
+    input_values
+        .iter()
+        .map(|v| almanac.map(&source_parameter, *v, &destination_parameter))
+        .min()
+        .unwrap()
 }
 
 fn parse_seeds_1(seeds: &str) -> Vec<i64> {
@@ -38,6 +49,27 @@ fn parse_seeds_1(seeds: &str) -> Vec<i64> {
         .split_ascii_whitespace()
         .map(|n| n.parse::<i64>().unwrap())
         .collect()
+}
+
+fn parse_seeds_2(seeds: &str) -> Vec<i64> {
+    let seeds = parse_seeds_1(seeds);
+    let mut seeds_iter = seeds.iter();
+
+    let mut seeds: Vec<i64> = vec![];
+    loop {
+        let seed_base_n = seeds_iter.next();
+        if seed_base_n.is_none() {
+            break;
+        }
+        let seed_base_n = *seed_base_n.unwrap();
+        let seed_base_l = *seeds_iter.next().unwrap();
+
+        for seed_n in seed_base_n..(seed_base_n + seed_base_l) {
+            seeds.push(seed_n);
+        }
+    }
+
+    seeds
 }
 
 #[derive(Debug, PartialEq)]

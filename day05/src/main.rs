@@ -10,30 +10,47 @@ fn main() {
 }
 
 // replace return type as required by the problem
-fn part1(input: &str) -> i32 {
-    0
+fn part1(input: &str) -> i64 {
+    let source_parameter = String::from("seed");
+    let destination_parameter = String::from("location");
+    let input_value_string = input.lines().next().unwrap();
+    let input_values: Vec<_> = input_value_string
+        .split(": ")
+        .nth(1)
+        .unwrap()
+        .split_ascii_whitespace()
+        .map(|n| n.parse::<i64>().unwrap())
+        .collect();
+
+    let almanac = Almanac::from(input);
+
+    input_values
+        .iter()
+        .map(|v| almanac.map(&source_parameter, *v, &destination_parameter))
+        .min()
+        .unwrap()
 }
 
 // replace return type as required by the problem
-fn part2(input: &str) -> i32 {
+fn part2(input: &str) -> i64 {
     0
 }
 
 #[derive(Debug, PartialEq)]
 enum DestinationValue {
-    In(i32),
-    Out(i32),
+    In(i64),
+    Out(i64),
 }
 
 #[derive(Default, Debug)]
 struct AlmanacRange {
-    destination_range_start: i32,
-    source_range_start: i32,
-    range_length: i32,
+    destination_range_start: i64,
+    source_range_start: i64,
+    range_length: i64,
 }
 
 impl AlmanacRange {
-    fn new(destination_range_start: i32, source_range_start: i32, range_length: i32) -> Self {
+    fn new(destination_range_start: i64, source_range_start: i64, range_length: i64) -> Self {
         Self {
             destination_range_start,
             source_range_start,
@@ -41,12 +58,12 @@ impl AlmanacRange {
         }
     }
 
-    fn in_source_range(&self, source_value: i32) -> bool {
+    fn in_source_range(&self, source_value: i64) -> bool {
         source_value >= self.source_range_start
             && source_value < self.source_range_start + self.range_length
     }
 
-    fn map(&self, source_value: i32) -> DestinationValue {
+    fn map(&self, source_value: i64) -> DestinationValue {
         if self.in_source_range(source_value) {
             DestinationValue::In(
                 source_value - (self.source_range_start - self.destination_range_start),
@@ -54,6 +71,17 @@ impl AlmanacRange {
         } else {
             DestinationValue::Out(source_value)
         }
+    }
+}
+
+impl From<&str> for AlmanacRange {
+    fn from(value: &str) -> Self {
+        let values: Vec<_> = value.split_ascii_whitespace().collect();
+        Self::new(
+            values[0].parse().unwrap(),
+            values[1].parse().unwrap(),
+            values[2].parse().unwrap(),
+        )
     }
 }
 
@@ -78,7 +106,7 @@ impl AlmanacEntry {
         self
     }
 
-    fn map(&self, source_value: i32) -> i32 {
+    fn map(&self, source_value: i64) -> i64 {
         let destination_value_possibilities: Vec<_> =
             self.ranges.iter().map(|r| r.map(source_value)).collect();
 
@@ -89,6 +117,30 @@ impl AlmanacEntry {
         }
 
         source_value
+    }
+}
+
+impl From<&str> for AlmanacEntry {
+    fn from(value: &str) -> Self {
+        let mut entry = AlmanacEntry::default();
+
+        let header_string = value.lines().next().unwrap();
+        let parameters: Vec<_> = header_string
+            .split_ascii_whitespace()
+            .next()
+            .unwrap()
+            .split('-')
+            .collect();
+        entry.source_parameter = String::from(parameters[0]);
+        entry.destination_parameter = String::from(parameters[2]);
+
+        for almanac_range_str in value.lines().skip(1) {
+            if almanac_range_str.trim().is_empty() {
+                continue;
+            }
+            entry = entry.add_range(AlmanacRange::from(almanac_range_str));
+        }
+        entry
     }
 }
 
@@ -103,7 +155,7 @@ impl Almanac {
         self
     }
 
-    fn map(&self, source_parameter: &str, source_value: i32, destination_parameter: &str) -> i32 {
+    fn map(&self, source_parameter: &str, source_value: i64, destination_parameter: &str) -> i64 {
         let mut current_parameter = String::from(source_parameter);
         let mut current_value = source_value;
 
@@ -120,6 +172,23 @@ impl Almanac {
         }
 
         current_value
+    }
+}
+
+impl From<&str> for Almanac {
+    fn from(value: &str) -> Self {
+        let mut almanac = Self::default();
+
+        let almanac_entries = value.lines().skip(2);
+        let almanac_entries = almanac_entries
+            .map(|e| e.trim())
+            .collect::<Vec<_>>()
+            .join("\n");
+        let almanac_entries = almanac_entries.split("\n\n");
+        for almanac_entry_str in almanac_entries {
+            almanac = almanac.add_entry(AlmanacEntry::from(almanac_entry_str));
+        }
+        almanac
     }
 }
 

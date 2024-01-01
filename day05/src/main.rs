@@ -14,13 +14,7 @@ fn part1(input: &str) -> i64 {
     let source_parameter = String::from("seed");
     let destination_parameter = String::from("location");
     let input_value_string = input.lines().next().unwrap();
-    let input_values: Vec<_> = input_value_string
-        .split(": ")
-        .nth(1)
-        .unwrap()
-        .split_ascii_whitespace()
-        .map(|n| n.parse::<i64>().unwrap())
-        .collect();
+    let input_values: Vec<_> = parse_seeds_1(input_value_string);
 
     let almanac = Almanac::from(input);
 
@@ -34,6 +28,16 @@ fn part1(input: &str) -> i64 {
 // replace return type as required by the problem
 fn part2(input: &str) -> i64 {
     0
+}
+
+fn parse_seeds_1(seeds: &str) -> Vec<i64> {
+    seeds
+        .split(": ")
+        .nth(1)
+        .unwrap()
+        .split_ascii_whitespace()
+        .map(|n| n.parse::<i64>().unwrap())
+        .collect()
 }
 
 #[derive(Debug, PartialEq)]

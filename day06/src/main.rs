@@ -38,10 +38,43 @@ fn part1(input: &str) -> i32 {
 }
 
 fn compute_record_breaking_combinations_for_race(race_time: i32, record_distance: i32) -> i32 {
-    (0..=race_time)
-        .map(|charge_time| charge_time * (race_time - charge_time))
-        .filter(|race_distance| *race_distance > record_distance)
-        .count() as i32
+    // the distance travelled by the boat is given by t * (R - t)
+    // where t is the time spent charging and R is the total race time
+    // We are looking for those times where t * (R - t) > D
+    // where D is the record distance travelled
+    // we can do this by finding the solutions to the
+    // equation t^2 - R.t + D = 0
+    // using the quadratic formula with a = 1, b = -R, c = D
+
+    // we want these to be floating point to accommodate the
+    // sqrt and division
+    let a = 1 as f64;
+    let b = -race_time as f64;
+    let c = record_distance as f64;
+
+    let quadratic_numerator_lower = -b - (b * b - 4.0 * a * c).sqrt();
+    let quadratic_numerator_upper = -b + (b * b - 4.0 * a * c).sqrt();
+    let quadratic_denominator = 2.0 * a;
+
+    let lower_intercept = quadratic_numerator_lower / quadratic_denominator;
+    let upper_intercept = quadratic_numerator_upper / quadratic_denominator;
+
+    let mut first_record_breaking_time = lower_intercept.ceil() as i64;
+    let mut last_record_breaking_time = upper_intercept.floor() as i64;
+
+    // have to check the boundaries because we must be strictly greater than,
+    // not equal to, the record distance
+    let distance = first_record_breaking_time * (race_time as i64 - first_record_breaking_time);
+    if distance == record_distance as i64 {
+        first_record_breaking_time += 1;
+    }
+
+    let distance = last_record_breaking_time * (race_time as i64 - last_record_breaking_time);
+    if distance == record_distance as i64 {
+        last_record_breaking_time -= 1;
+    }
+
+    (last_record_breaking_time - first_record_breaking_time + 1) as i32
 }
 
 // replace return type as required by the problem

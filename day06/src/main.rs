@@ -9,14 +9,14 @@ fn main() {
 }
 
 // replace return type as required by the problem
-fn part1(input: &str) -> i32 {
+fn part1(input: &str) -> i64 {
     let mut input_lines = input.lines();
     let race_times: Vec<_> = input_lines
         .next()
         .unwrap()
         .split_ascii_whitespace()
         .skip(1)
-        .map(|t| t.parse::<i32>().unwrap())
+        .map(|t| t.parse::<i64>().unwrap())
         .collect();
 
     let record_distances: Vec<_> = input_lines
@@ -24,7 +24,7 @@ fn part1(input: &str) -> i32 {
         .unwrap()
         .split_ascii_whitespace()
         .skip(1)
-        .map(|d| d.parse::<i32>().unwrap())
+        .map(|d| d.parse::<i64>().unwrap())
         .collect();
 
     (0..race_times.len())
@@ -34,10 +34,10 @@ fn part1(input: &str) -> i32 {
                 record_distances[race_index],
             )
         })
-        .product::<i32>()
+        .product::<i64>()
 }
 
-fn compute_record_breaking_combinations_for_race(race_time: i32, record_distance: i32) -> i32 {
+fn compute_record_breaking_combinations_for_race(race_time: i64, record_distance: i64) -> i64 {
     // the distance travelled by the boat is given by t * (R - t)
     // where t is the time spent charging and R is the total race time
     // We are looking for those times where t * (R - t) > D
@@ -64,22 +64,52 @@ fn compute_record_breaking_combinations_for_race(race_time: i32, record_distance
 
     // have to check the boundaries because we must be strictly greater than,
     // not equal to, the record distance
-    let distance = first_record_breaking_time * (race_time as i64 - first_record_breaking_time);
-    if distance == record_distance as i64 {
+    let distance = first_record_breaking_time * (race_time - first_record_breaking_time);
+    if distance == record_distance {
         first_record_breaking_time += 1;
     }
 
-    let distance = last_record_breaking_time * (race_time as i64 - last_record_breaking_time);
-    if distance == record_distance as i64 {
+    let distance = last_record_breaking_time * (race_time - last_record_breaking_time);
+    if distance == record_distance {
         last_record_breaking_time -= 1;
     }
 
-    (last_record_breaking_time - first_record_breaking_time + 1) as i32
+    last_record_breaking_time - first_record_breaking_time + 1
 }
 
 // replace return type as required by the problem
-fn part2(input: &str) -> i32 {
-    0
+fn part2(input: &str) -> i64 {
+    let mut input_lines = input.lines();
+
+    let race_time = input_lines
+        .next()
+        .unwrap()
+        .split(":")
+        .skip(1)
+        .next()
+        .unwrap()
+        .trim()
+        .chars()
+        .filter(|c| !c.is_whitespace())
+        .collect::<String>()
+        .parse::<i64>()
+        .unwrap();
+
+    let record_distance = input_lines
+        .next()
+        .unwrap()
+        .split(":")
+        .skip(1)
+        .next()
+        .unwrap()
+        .trim()
+        .chars()
+        .filter(|c| !c.is_whitespace())
+        .collect::<String>()
+        .parse::<i64>()
+        .unwrap();
+
+    compute_record_breaking_combinations_for_race(race_time, record_distance)
 }
 
 #[cfg(test)]
@@ -101,18 +131,11 @@ Distance:  9  40  200"#;
     }
 
     #[test]
-    #[ignore = "not yet implemented"]
     fn test_part2() {
-        let test_cases = [
-            TestCase {
-                input: TEST_INPUT,
-                expected: 123,
-            },
-            TestCase {
-                input: "abc",
-                expected: 345,
-            },
-        ];
+        let test_cases = [TestCase {
+            input: TEST_INPUT,
+            expected: 71503,
+        }];
         for TestCase { input, expected } in test_cases.iter() {
             assert_eq!(part2(*input), *expected);
         }

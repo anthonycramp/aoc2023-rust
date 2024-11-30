@@ -1,3 +1,5 @@
+use std::collections::{BinaryHeap, HashMap};
+
 const DAY_NUMBER: &str = "17";
 const INPUT: &str = include_str!("../../inputs/day17.txt");
 // const INPUT: &str = "";
@@ -44,35 +46,58 @@ impl DesertIslandMap {
         (location.row * self.map_cols + location.col) as usize
     }
 
-    fn get_neighbours(&self, location: &Location) -> Vec<Location> {
-        let mut neighbours = vec![];
+    fn get_location(&self, index: usize) -> Location {
+        let row = index / self.map_cols;
+        let col = index % self.map_rows;
+
+        Location { row, col }
+    }
+
+    fn get_map_size(&self) -> usize {
+        self.map_rows * self.map_cols
+    }
+
+    fn get_neighbours(&self, location: &Location) -> HashMap<AbsoluteDirection, Location> {
+        let mut neighbours = HashMap::new();
 
         if location.row > 0 {
-            neighbours.push(Location {
-                row: location.row - 1,
-                col: location.col,
-            });
+            neighbours.insert(
+                AbsoluteDirection::NORTH,
+                Location {
+                    row: location.row - 1,
+                    col: location.col,
+                },
+            );
         }
 
         if location.row < self.map_rows - 1 {
-            neighbours.push(Location {
-                row: location.row + 1,
-                col: location.col,
-            });
+            neighbours.insert(
+                AbsoluteDirection::SOUTH,
+                Location {
+                    row: location.row + 1,
+                    col: location.col,
+                },
+            );
         }
 
         if location.col > 0 {
-            neighbours.push(Location {
-                row: location.row,
-                col: location.col - 1,
-            });
+            neighbours.insert(
+                AbsoluteDirection::WEST,
+                Location {
+                    row: location.row,
+                    col: location.col - 1,
+                },
+            );
         }
 
         if location.col < self.map_cols - 1 {
-            neighbours.push(Location {
-                row: location.row,
-                col: location.col + 1,
-            });
+            neighbours.insert(
+                AbsoluteDirection::EAST,
+                Location {
+                    row: location.row,
+                    col: location.col + 1,
+                },
+            );
         }
 
         neighbours
@@ -100,30 +125,84 @@ impl Location {
     }
 }
 
+#[derive(PartialEq, Eq, Hash)]
+enum AbsoluteDirection {
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+}
+
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+struct State {
+    cost: i32,
+    index: usize,
+}
+
+impl Ord for State {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        other
+            .cost
+            .cmp(&self.cost)
+            .then_with(|| self.index.cmp(&other.index))
+    }
+}
+
+impl PartialOrd for State {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
 // replace return type as required by the problem
 fn part1(input: &str) -> i32 {
     let desert_island_map = DesertIslandMap::from(input);
 
-    let mut current_location = Location::default();
-    let end_location = Location::new(
+    let mut start = Location::default();
+    let goal = Location::new(
         desert_island_map.map_rows - 1,
         desert_island_map.map_cols - 1,
     );
-    let mut path = vec![];
 
-    loop {
-        path.push(current_location.clone());
+    let mut distance = vec![i32::max_value(); desert_island_map.get_map_size()];
+    let mut last = vec![-1; desert_island_map.get_map_size()];
 
-        current_location = Location::new(current_location.row + 1, current_location.col + 1);
+    distance[desert_island_map.get_index(&start)] = 0;
 
-        if current_location == end_location {
-            break;
+    let mut heap = BinaryHeap::new();
+    heap.push(State {
+        cost: 0,
+        index: desert_island_map.get_index(&start),
+    });
+
+    while let Some(State { cost, index }) = heap.pop() {
+        if index == desert_island_map.get_index(&goal) {
+            println!("{:?}", &last);
+            return distance[index];
+        }
+
+        if cost > distance[index] {
+            continue;
+        }
+
+        let neighbours = desert_island_map.get_neighbours(&desert_island_map.get_location(index));
+
+        for (_, location) in neighbours {
+            let next = State {
+                cost: cost + desert_island_map.get_heat_loss(&location),
+                index: desert_island_map.get_index(&location),
+            };
+
+            if next.cost < distance[next.index] {
+                heap.push(next);
+                distance[next.index] = next.cost;
+                last[next.index] = index as i32;
+            }
         }
     }
-    println!("{:?}", &desert_island_map);
-    path.iter()
-        .map(|l| desert_island_map.get_heat_loss(l))
-        .sum::<i32>()
+
+    println!("{:?}", &last);
+    0
 }
 
 // replace return type as required by the problem
